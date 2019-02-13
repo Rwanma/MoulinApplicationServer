@@ -1,15 +1,10 @@
-
-let mysql = require('mysql');
+let DatabaseConnection = require('./DatabaseConnection.js');
 
 
 class HoursTable {
     constructor() {
-        this.connection = mysql.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: 'Sqlpass01',
-            database: 'test_database'
-        });
+        let db = new DatabaseConnection();
+        this.connection = db.getConnection();
     }
 
 
@@ -61,7 +56,7 @@ class HoursTable {
         let hoursThis = this;
         this.connection.query('SELECT hours FROM EMPLOYEE_HOURS WHERE  employee_id=? AND  payment_type=? AND work_date = ? ', [employee_id, payment_type, date], function (error, results) {
             if (error) throw error;
-            console.log(results);
+            //console.log(results);
             if (results.length === 0) {
                 if (hours !== 0) {
                     hoursThis.connection.query('INSERT INTO EMPLOYEE_HOURS(employee_id, payment_type, work_date, hours) VALUES (?,?,?,?)', [employee_id, payment_type, date, hours], function (error) {

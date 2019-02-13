@@ -1,6 +1,4 @@
-
-
-let mysql = require('mysql');
+let DatabaseConnection = require('./DatabaseConnection.js');
 let ExcelReader = require('node-excel-stream').ExcelReader;
 const fs = require('fs');
 let Helper = require('../Helpers/Helpers.js');
@@ -8,12 +6,8 @@ let Helper = require('../Helpers/Helpers.js');
 
 class AnzSpendingTable {
     constructor() {
-        this.connection = mysql.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: 'Sqlpass01',
-            database: 'test_database'
-        });
+        let db = new DatabaseConnection();
+        this.connection = db.getConnection();
     }
 
 

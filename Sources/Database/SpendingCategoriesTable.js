@@ -1,17 +1,12 @@
-
-let mysql = require('mysql');
+let DatabaseConnection = require('./DatabaseConnection.js');
 let ExcelReader = require('node-excel-stream').ExcelReader;
 const fs = require('fs');
 
 
 class SpendingCategoriesTable {
     constructor() {
-        this.connection = mysql.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: 'Sqlpass01',
-            database: 'test_database'
-        });
+        let db = new DatabaseConnection();
+        this.connection = db.getConnection();
     }
 
 

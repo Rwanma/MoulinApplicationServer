@@ -1,16 +1,11 @@
-
-let mysql = require('mysql');
+let DatabaseConnection = require('./DatabaseConnection.js');
 
 
 
 class EmployeeTable {
     constructor() {
-        this.connection = mysql.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: 'Sqlpass01',
-            database: 'test_database'
-        });
+        let db = new DatabaseConnection();
+        this.connection = db.getConnection();
     }
 
 

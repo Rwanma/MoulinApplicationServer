@@ -10,8 +10,6 @@ var IncomingForm = require('formidable').IncomingForm;
 let AnzSpendingTable = require('./Sources/Database/AnzSpendingTable');
 let SpendingCategoriesTable = require('./Sources/Database/SpendingCategoriesTable');
 let DailyInputsTable = require('./Sources/Database/DailyInputsTable');
-
-
 let DailyRealData = require('./Sources/AnzDataAnalysis/DataTransformer/DailyRealData');
 
 
@@ -195,7 +193,7 @@ let server = app.listen(3005, function () {
         let dailyInputsTable = new DailyInputsTable();
         console.log('Daily input : ' + req.query.beginDate + ' ' + req.query.endDate);
         dailyInputsTable.getDailyInputsInJson(new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), function (dailyInputJson) {
-            res.status(200).send(dx`ailyInputJson);
+            res.status(200).send(dailyInputJson);
         });
     });
 
