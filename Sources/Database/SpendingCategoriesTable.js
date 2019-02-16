@@ -84,10 +84,12 @@ class SpendingCategoriesTable {
 
 module.exports = SpendingCategoriesTable;
 
-/*spendingCategoriesTable = new SpendingCategoriesTable();
+/*
+spendingCategoriesTable = new SpendingCategoriesTable();
 spendingCategoriesTable.getAllCategoriesFromDatabase(function (data) {
     console.log(data);
-});*/
+});
+*/
 
 
 //spendingCategoriesTable.insertCategoryInDatabaseFromCsvFormat();

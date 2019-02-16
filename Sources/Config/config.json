@@ -1,5 +1,8 @@
 {
   "database": {
-    "name": "test_database2"
+    "name": "test_database2",
+    "host": "localhost",
+    "user": "marwan",
+    "password": "xxxxx"
   }
 }

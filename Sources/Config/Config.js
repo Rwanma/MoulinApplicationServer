@@ -2,14 +2,13 @@
 
 class Config {
 
-    static getDatabaseName() {
+    static getDatabaseConfig() {
         const config = require('./config.json');
-        console.log(config);
-        return(config.database.name);
+        return(config.database);
     }
 }
 
 module.exports = Config;
 
 
-//console.log(Config.getDatabaseName());
+//console.log(Config.getDatabaseConfig());

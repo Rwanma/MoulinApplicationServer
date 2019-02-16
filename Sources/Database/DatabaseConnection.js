@@ -7,16 +7,22 @@ class DatabaseConnection {
 
 
     static getConnection() {
-        let databaseName=Config.getDatabaseName();
+        let databaseConfig=Config.getDatabaseConfig();
+
+        //console.log(databaseConfig.name);
 
         let connection = mysql.createConnection({
-            host: 'localhost',
-            user: 'marwan',
-            password: 'Findumonde01',
-            database: databaseName
+            host: databaseConfig.host,
+            user: databaseConfig.user,
+            password: databaseConfig.password,
+            database: databaseConfig.name
         });
+
+        //console.log(connection);
         return connection;
     }
 }
 
 module.exports = DatabaseConnection;
+
+// DatabaseConnection.getConnection();
