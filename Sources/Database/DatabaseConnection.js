@@ -2,18 +2,15 @@ let mysql = require('mysql');
 
 
 class DatabaseConnection {
-    constructor() {
 
 
-    }
 
-
-    getConnection() {
+    static getConnection() {
         let connection = mysql.createConnection({
             host: 'localhost',
-            user: 'root',
-            password: 'Sqlpass01',
-            database: 'test_database'
+            user: 'marwan',
+            password: 'Findumonde01',
+            database: 'test_database2'
         });
         return connection;
     }

@@ -17,10 +17,16 @@ class DailyRealData {
         dataTransformerWithDates.constructDataInMapFormat('false', function (mySpendingWithDates) {
             mySpendingWithDates.transformToAgGridData(beginDate, endDate, function (anzSpending) {
                 employeeHours.getHoursForEmployeesInJson(beginDate, endDate, function (employeeHours) {
-                    dailyInputsTable.getDailyInputsInJson(beginDate, endDate, function (dailyInputs) {
+                    dailyInputsTable.getDailyInputsInJson(beginDate, endDate, 'true', function (dailyInputs) {
 
-                        jsonDailyRealData.columns = JSON.parse(JSON.stringify(anzSpending.columns));
-                        jsonDailyRealData.columns[0] = { headerName: 'Category', field: 'Category', pinned: 'left', filter: 'agTextColumnFilter' };
+                        //jsonDailyRealData.columns = JSON.parse(JSON.stringify(anzSpending.columns));
+
+                        console.log('*************************');
+                        console.log(jsonDailyRealData.columns);
+                        console.log('*************************');
+
+
+                        jsonDailyRealData.columns[0] = { headerName: 'Category', field: 'Category', pinned: 'left', filter: 'agTextColumnFilter' , editable:false};
 
                         let employeeTotal = {}, anzTotal = {}, revenueTotal = {}, cafeDailyCosts = {}, dailyTotalReal = {}, dailyTotalEstimate = {};
                         employeeTotal['Category'] = 'Employees Day Total';
@@ -32,6 +38,10 @@ class DailyRealData {
 
 
                         dateArray.forEach(function (work_date) {
+                            jsonDailyRealData.columns.push({
+                                headerName: work_date, field: work_date, filter: 'agTextColumnFilter', editable: false
+                            });
+
                             revenueTotal[work_date] = dailyInputs.totalRevenu[0][work_date];
                             employeeTotal[work_date] = employeeHours.totalPayment[0][work_date];
                             anzTotal[work_date] = anzSpending.totalAnzSpending[0][work_date];

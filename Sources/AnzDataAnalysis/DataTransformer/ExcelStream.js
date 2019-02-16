@@ -18,7 +18,7 @@ class ExcelStream {
     }
 
     readConfiguration(callback) {
-        let file = 'Sources/AnzDataAnalysis/CsvFiles/configLine.xlsx';
+        let file = './Sources/AnzDataAnalysis/CsvFiles/configLine.xlsx';
         let mySheets = {
             sheets: [{
                 name: 'Data',
@@ -37,7 +37,7 @@ class ExcelStream {
     }
 
     readAnzData(callback) {
-        let file = 'Sources/AnzDataAnalysis/CsvFiles/anzData.xlsx';
+        let file = './Sources/AnzDataAnalysis/CsvFiles/anzData.xlsx';
         //let file = '../CsvFiles/anzData.xlsx';
         let mySheets = {
             sheets: [{

@@ -8,7 +8,7 @@ class SpendingUnit {
 
 
     printData() {
-        console.log(this.amount + ',' + this.description + ',' + this.date);
+        //console.log(this.amount + ',' + this.description + ',' + this.date);
     }
 }
 

@@ -3,18 +3,16 @@ let Helper = require('../../Sources/Helpers/Helpers.js');
 
 
 class DailyInputsTable {
-    constructor() {
-        let db = new DatabaseConnection();
-        this.connection = db.getConnection();
-    }
 
 
-    getDailyInputsInJson(beginDate, endDate, callback) {
+    getDailyInputsInJson(beginDate, endDate, allowTableChanges, callback) {
+        let editableTable = (allowTableChanges==='true'? true:false);
         let dbBeginDate = beginDate.getDateInDatabaseFormat();
         let dbEndDate = endDate.getDateInDatabaseFormat();
-        this.connection.query('SELECT DATE_FORMAT(work_date,\'%d/%m/%Y\') as work_date, cash_revenu, ftpos_revenu, coffee_bags, milk_cartons, soy_cartons ' +
+        let dbConnection = DatabaseConnection.getConnection();
+        dbConnection.query('SELECT DATE_FORMAT(work_date,\'%d/%m/%Y\') as work_date, cash_revenu, ftpos_revenu, coffee_bags, milk_cartons, soy_cartons ' +
             'FROM DAILY_INPUTS WHERE work_date >= ? AND work_date <= ?', [dbBeginDate, dbEndDate], function (error, results) {
-            //console.log(error);
+            dbConnection.end();
             if (error) throw error;
             let dateArray = Helper.getDatesRangeArray(Helper.transformDayMonthYearToDate(beginDate.dateInDDMMYYYFormat), Helper.transformDayMonthYearToDate(endDate.dateInDDMMYYYFormat));
             let jsonObj = { columns: [], data: [], dataSalary: [], totalMilkCoffeeSpending: [], totalRevenu: [] };
@@ -23,7 +21,7 @@ class DailyInputsTable {
                 field: 'Daily Input',
                 pinned: 'left',
                 filter: 'agTextColumnFilter',
-                editable: false
+                editable: editableTable
             });
 
 
@@ -41,7 +39,7 @@ class DailyInputsTable {
 
             dateArray.forEach(function (work_date) {
                 jsonObj.columns.push({
-                    headerName: work_date, field: work_date, filter: 'agTextColumnFilter', editable: true
+                    headerName: work_date, field: work_date, filter: 'agTextColumnFilter', editable: editableTable
                 });
                 results.forEach(function (result) {
                     if (result.work_date === work_date) {
@@ -109,39 +107,40 @@ class DailyInputsTable {
 
     updateInputTable(work_date, column, value, callback) {
         let dbDate = work_date.getDateInDatabaseFormat();
-        let DailyInputsThis = this;
-
-        this.connection.query('SELECT * FROM DAILY_INPUTS WHERE work_date = ? ', [dbDate], function (error, results) {
+        let dbConnection = DatabaseConnection.getConnection();
+        dbConnection.query('SELECT * FROM DAILY_INPUTS WHERE work_date = ? ', [dbDate], function (error, results) {
             if (error) throw error;
 
             if (results.length !== 0) {
-                DailyInputsThis.connection.query('UPDATE DAILY_INPUTS SET ' + column + '=? WHERE work_date=?', [value, dbDate], function (error) {
+                dbConnection.query('UPDATE DAILY_INPUTS SET ' + column + '=? WHERE work_date=?', [value, dbDate], function (error) {
                     if (error) throw error;
-                    DailyInputsThis.connection.query('SELECT * FROM DAILY_INPUTS WHERE work_date = ? ', [dbDate], function (error, results) {
+                    dbConnection.query('SELECT * FROM DAILY_INPUTS WHERE work_date = ? ', [dbDate], function (error, results) {
                         if ((results[0].cash_revenu === 0 || results[0].cash_revenu === null)
                             && (results[0].ftpos_revenu === 0 || results[0].ftpos_revenu === null)
                             && (results[0].coffee_bags === 0 || results[0].coffee_bags === null)
                             && (results[0].milk_cartons === 0 || results[0].milk_cartons === null)
                             && (results[0].soy_cartons === 0 || results[0].soy_cartons === null)) {
-                            DailyInputsThis.connection.query('DELETE FROM DAILY_INPUTS WHERE  work_date = ? ', [dbDate], function (error) {
+                            dbConnection.query('DELETE FROM DAILY_INPUTS WHERE  work_date = ? ', [dbDate], function (error) {
                                 console.log(error);
                                 if (error) throw error;
+                                dbConnection.end();
                                 callback();
                             });
                         } else {
+                            dbConnection.end();
                             callback();
                         }
                     });
                 });
             } else if (value !== 0) {
-                DailyInputsThis.connection.query('INSERT INTO DAILY_INPUTS(work_date, ' + column + ') VALUES (?, ?)', [dbDate, value], function (error) {
+                dbConnection.query('INSERT INTO DAILY_INPUTS(work_date, ' + column + ') VALUES (?, ?)', [dbDate, value], function (error) {
                     console.log(error);
                     if (error) throw error;
+                    dbConnection.end();
                     callback();
                 });
             }
         });
-        //callback();
     }
 
 
@@ -164,8 +163,8 @@ dailyInputsTable.updateValueInInputTable(testDate,'coffee_bags', 5);
 /*let beginDate = new Helper.MyDateClass('01/01/2019');
 let endDate = new Helper.MyDateClass('02/02/2019');
 let dailyInputsTable = new DailyInputsTable();
-dailyInputsTable.getDailyInputsInJson(beginDate, endDate, function (data) {
-    //console.log(data);
+dailyInputsTable.getDailyInputsInJson(beginDate, endDate, true, function (data) {
+    console.log(data);
 });*/
 
 

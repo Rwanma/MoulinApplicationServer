@@ -14,6 +14,13 @@ class DataTransformer {
             anzSpendingTable.getAllAnzSpendingFromTable(function (dataArray) {
                 let spending, categoryString;
                 for (const arrayElement of dataArray) {
+
+                    // shitty algo necessary to have at least on element. Will change algo later
+                    if (configArray.length === 0){
+                        let  myDummyObj = { categories:'xxxxxxxxxxxxx'};
+                        configArray.push(myDummyObj);
+                    }
+
                     for (const configElement of configArray) {
                         if (arrayElement.spending_description.toLowerCase().includes('woolworths online')) {
                             categoryString = 'woolworths online';

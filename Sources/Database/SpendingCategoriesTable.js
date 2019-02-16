@@ -4,15 +4,12 @@ const fs = require('fs');
 
 
 class SpendingCategoriesTable {
-    constructor() {
-        let db = new DatabaseConnection();
-        this.connection = db.getConnection();
-    }
 
 
     getCategoriesFromCsvToDatabase(file, callback) {
         //let file = '../AnzDataAnalysis/CsvFiles/configLine.xlsx';
         //let file = 'Sources/AnzDataAnalysis/CsvFiles/configLine.xlsx';
+
         let mySheets = {
             sheets: [{
                 name: 'Data',
@@ -37,21 +34,24 @@ class SpendingCategoriesTable {
     };
 
     insertCategoryInDatabaseFromCsvFormat(file) {
-        let categoryThis = this;
+        let dbConnection = DatabaseConnection.getConnection();
         this.getCategoriesFromCsvToDatabase(file, function (categoryArray) {
-            categoryThis.connection.query('delete from SPENDING_CATEGORIES', function () {
-                categoryThis.connection.query('INSERT INTO SPENDING_CATEGORIES(categories) VALUES ?',
+            dbConnection.query('delete from SPENDING_CATEGORIES', function () {
+                dbConnection.query('INSERT INTO SPENDING_CATEGORIES(categories) VALUES ?',
                     [categoryArray], function (error) {
                         console.log(error);
                         if (error) throw error;
+                        dbConnection.end();
                     });
             });
         });
     }
 
     getAllCategoriesFromDatabase(callback) {
-        this.connection.query('select * from SPENDING_CATEGORIES', function (error, results) {
+        let dbConnection = DatabaseConnection.getConnection();
+        dbConnection.query('select * from SPENDING_CATEGORIES', function (error, results) {
             if (error) throw error;
+            dbConnection.end();
             callback(results);
         });
     }
@@ -59,9 +59,11 @@ class SpendingCategoriesTable {
 
     addCategory(category, callback) {
         let spendingCategoryThis = this;
-        this.connection.query(
+        let dbConnection = DatabaseConnection.getConnection();
+        dbConnection.query(
             'INSERT INTO SPENDING_CATEGORIES(categories) VALUES (?)', [category], function (error) {
                 if (error) throw error;
+                dbConnection.end();
                 spendingCategoryThis.getAllCategoriesFromDatabase(callback);
             });
     }
@@ -70,20 +72,26 @@ class SpendingCategoriesTable {
 
     deleteCategory(category, callback) {
         let spendingCategoryThis = this;
-        this.connection.query('DELETE FROM SPENDING_CATEGORIES WHERE categories=?', [category], function (error) {
+        let dbConnection = DatabaseConnection.getConnection();
+        dbConnection.query('DELETE FROM SPENDING_CATEGORIES WHERE categories=?', [category], function (error) {
             if (error) throw error;
+            dbConnection.end();
             spendingCategoryThis.getAllCategoriesFromDatabase(callback);
         });
     }
 }
 
+
 module.exports = SpendingCategoriesTable;
 
-
-/*spendingCategoriesTable = new SpendingCategoriesTable();
+/*
+spendingCategoriesTable = new SpendingCategoriesTable();
 spendingCategoriesTable.getAllCategoriesFromDatabase(function (data) {
     console.log(data);
-});*/
+});
+*/
+
+
 //spendingCategoriesTable.insertCategoryInDatabaseFromCsvFormat();
 /*
 spendingCategoriesTable.insertCategoryInDatabaseFromCsvFormat(function (data) {

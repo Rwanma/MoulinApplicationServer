@@ -29,11 +29,11 @@ class SpendingsContainer {
 
     printData() {
         this.spendingMap.forEach(function (spendingDay, date) {
-
+/*
             console.log('****************************************************************');
             console.log('printing for the date: ' + date);
             spendingDay.printData();
-            console.log('****************************************************************');
+            console.log('****************************************************************');*/
         });
     }
 

@@ -33,6 +33,7 @@ let server = app.listen(3005, function () {
     //ANZ DATA
     app.get("/getAnzSpending", function (req, res) {
         let dataTransformerWithDates = new DataTransormer();
+        console.log(req.query);
         dataTransformerWithDates.constructDataInMapFormat(req.query.useFilter, function (mySpendingWithDates) {
             mySpendingWithDates.transformToAgGridData(new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), function (JsonData) {
                 res.status(200).send(JsonData);
@@ -44,7 +45,7 @@ let server = app.listen(3005, function () {
     app.post('/uploadAnzCsv', function (req, res) {
         res.status(200).send('');
         let form = new IncomingForm();
-        form.uploadDir = 'Sources\\AnzDataAnalysis\\CsvFiles';
+        form.uploadDir = 'Sources/AnzDataAnalysis/CsvFiles';
         form.parse(req, function (err, fields, files) {
             if (err) {
                 console.log('some error', err);
@@ -63,7 +64,7 @@ let server = app.listen(3005, function () {
     app.post('/uploadConfigurationCategory', function (req, res) {
         res.status(200).send('');
         let form = new IncomingForm();
-        form.uploadDir = 'Sources\\AnzDataAnalysis\\CsvFiles';
+        form.uploadDir = 'Sources/AnzDataAnalysis/CsvFiles';
         form.parse(req, function (err, fields, files) {
             if (err) {
                 console.log('some error', err);
@@ -192,7 +193,7 @@ let server = app.listen(3005, function () {
     app.get("/GetDailyInputs", function (req, res) {
         let dailyInputsTable = new DailyInputsTable();
         console.log('Daily input : ' + req.query.beginDate + ' ' + req.query.endDate);
-        dailyInputsTable.getDailyInputsInJson(new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), function (dailyInputJson) {
+        dailyInputsTable.getDailyInputsInJson(new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), req.query.allowTableChanges, function (dailyInputJson) {
             res.status(200).send(dailyInputJson);
         });
     });
@@ -202,7 +203,7 @@ let server = app.listen(3005, function () {
         console.log('Update Input Table: ' + req.query.workDate + ' ' + req.query.typeChanged + ' ' + req.query.newValue);
         let dailyInputsTable = new DailyInputsTable();
         dailyInputsTable.updateInputTable(new Helper.MyDateClass(req.query.workDate), req.query.typeChanged, parseInt(req.query.newValue, 10), function () {
-            dailyInputsTable.getDailyInputsInJson(new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), function (dailyInputJson) {
+            dailyInputsTable.getDailyInputsInJson(new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), 'true', function (dailyInputJson) {
                 res.status(200).send(dailyInputJson);
             });
         });

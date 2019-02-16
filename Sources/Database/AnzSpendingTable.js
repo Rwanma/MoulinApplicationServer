@@ -5,16 +5,9 @@ let Helper = require('../Helpers/Helpers.js');
 
 
 class AnzSpendingTable {
-    constructor() {
-        let db = new DatabaseConnection();
-        this.connection = db.getConnection();
-    }
-
 
 
     getAnzDataFromCsvToDatabase(file, callback) {
-        //let file = '../AnzDataAnalysis/CsvFiles/anzData.xlsx';
-        //let file = 'Sources/AnzDataAnalysis/CsvFiles/anzData.xlsx';
         let mySheets = {
             sheets: [{
                 name: 'Data',
@@ -45,7 +38,7 @@ class AnzSpendingTable {
     };
 
 
-    insertAllAnzSpendings(file, callback) {
+    insertAllAnzSpendings(file) {
         let anzTableThis = this;
         this.getAnzDataFromCsvToDatabase(file, function (anzSpendingArray) {
             anzTableThis.connection.query('delete from ANZ_SPENDING', function () {
@@ -61,8 +54,10 @@ class AnzSpendingTable {
 
 
     getAllAnzSpendingFromTable(callback) {
-        this.connection.query('select DATE_FORMAT(spending_date,\'%d/%m/%Y\') as spending_date, amount, spending_description from ANZ_SPENDING', function (error, results) {
+        let dbConnection = DatabaseConnection.getConnection();
+        dbConnection.query('select DATE_FORMAT(spending_date,\'%d/%m/%Y\') as spending_date, amount, spending_description from ANZ_SPENDING', function (error, results) {
             if (error) throw error;
+            dbConnection.end();
             callback(results);
         });
     }
