@@ -2,20 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d64cbd9-f3ee-4972-954c-18fcdf363c1f" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sources/Config/Config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sources/Config/config.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/DailyRealData.js" beforeDir="false" afterPath="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/DailyRealData.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/DataTransformer.js" beforeDir="false" afterPath="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/DataTransformer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/ExcelStream.js" beforeDir="false" afterPath="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/ExcelStream.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/SpendingContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/SpendingContainer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/SpendingUnit.js" beforeDir="false" afterPath="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/SpendingUnit.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sources/Database/AnzSpendingTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/Sources/Database/AnzSpendingTable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sources/Database/DailyInputsTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/Sources/Database/DailyInputsTable.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Sources/Database/DatabaseConnection.js" beforeDir="false" afterPath="$PROJECT_DIR$/Sources/Database/DatabaseConnection.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sources/Database/EmployeeTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/Sources/Database/EmployeeTable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sources/Database/HoursTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/Sources/Database/HoursTable.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Sources/Database/SpendingCategoriesTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/Sources/Database/SpendingCategoriesTable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -39,17 +30,17 @@
       <file leaf-file-name="DatabaseConnection.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Sources/Database/DatabaseConnection.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="11" column="37" selection-start-line="11" selection-start-column="37" selection-end-line="11" selection-end-column="37" />
+            <state relative-caret-position="285">
+              <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SpendingCategoriesTable.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SpendingCategoriesTable.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Sources/Database/SpendingCategoriesTable.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1083">
-              <caret line="60" column="9" selection-start-line="60" selection-start-column="9" selection-end-line="60" selection-end-column="9" />
+            <state relative-caret-position="263">
+              <caret line="86" column="2" selection-start-line="86" selection-end-line="89" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -57,7 +48,7 @@
       <file leaf-file-name="HoursTable.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Sources/Database/HoursTable.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-853">
+            <state relative-caret-position="-839">
               <caret line="45" column="26" selection-start-line="45" selection-end-line="46" />
             </state>
           </provider>
@@ -66,7 +57,7 @@
       <file leaf-file-name="EmployeeTable.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Sources/Database/EmployeeTable.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-416">
+            <state relative-caret-position="-402">
               <caret line="10" column="18" selection-start-line="10" selection-end-line="11" />
             </state>
           </provider>
@@ -81,20 +72,29 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AnzSpendingTable.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Sources/Database/AnzSpendingTable.js">
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="382">
-              <caret line="68" column="2" selection-start-line="68" selection-end-line="71" selection-end-column="5" />
+            <state relative-caret-position="309">
+              <caret line="119" column="44" selection-start-line="119" selection-start-column="44" selection-end-line="119" selection-end-column="44" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app.js">
+      <file leaf-file-name="Config.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Sources/Config/Config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="385">
-              <caret line="123" column="30" selection-start-line="123" selection-start-column="30" selection-end-line="123" selection-end-column="30" />
+            <state relative-caret-position="266">
+              <caret line="14" column="2" selection-start-line="14" selection-start-column="2" selection-end-line="14" selection-end-column="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="config.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Sources/Config/config.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="76">
+              <caret line="4" column="1" lean-forward="true" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -147,13 +147,15 @@
         <option value="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/DataTransformer.js" />
         <option value="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/SpendingUnit.js" />
         <option value="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/SpendingContainer.js" />
-        <option value="$PROJECT_DIR$/Sources/Database/DatabaseConnection.js" />
         <option value="$PROJECT_DIR$/Sources/Database/HoursTable.js" />
         <option value="$PROJECT_DIR$/Sources/Database/EmployeeTable.js" />
         <option value="$PROJECT_DIR$/Sources/Database/DailyInputsTable.js" />
         <option value="$PROJECT_DIR$/Sources/Database/AnzSpendingTable.js" />
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/DailyRealData.js" />
+        <option value="$PROJECT_DIR$/Sources/Config/config.json" />
+        <option value="$PROJECT_DIR$/Sources/Config/Config.js" />
+        <option value="$PROJECT_DIR$/Sources/Database/DatabaseConnection.js" />
         <option value="$PROJECT_DIR$/Sources/Database/SpendingCategoriesTable.js" />
       </list>
     </option>
@@ -171,6 +173,9 @@
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths>
@@ -208,32 +213,13 @@
               <item name="nodeserver" type="b2602c69:ProjectViewProjectNode" />
               <item name="nodeserver" type="462c0819:PsiDirectoryNode" />
               <item name="Sources" type="462c0819:PsiDirectoryNode" />
-              <item name="AnzDataAnalysis" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="nodeserver" type="b2602c69:ProjectViewProjectNode" />
-              <item name="nodeserver" type="462c0819:PsiDirectoryNode" />
-              <item name="Sources" type="462c0819:PsiDirectoryNode" />
-              <item name="AnzDataAnalysis" type="462c0819:PsiDirectoryNode" />
-              <item name="DataTransformer" type="462c0819:PsiDirectoryNode" />
+              <item name="Config" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="nodeserver" type="b2602c69:ProjectViewProjectNode" />
               <item name="nodeserver" type="462c0819:PsiDirectoryNode" />
               <item name="Sources" type="462c0819:PsiDirectoryNode" />
               <item name="Database" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="nodeserver" type="b2602c69:ProjectViewProjectNode" />
-              <item name="nodeserver" type="462c0819:PsiDirectoryNode" />
-              <item name="Sources" type="462c0819:PsiDirectoryNode" />
-              <item name="Employees" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="nodeserver" type="b2602c69:ProjectViewProjectNode" />
-              <item name="nodeserver" type="462c0819:PsiDirectoryNode" />
-              <item name="Sources" type="462c0819:PsiDirectoryNode" />
-              <item name="Helpers" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -271,7 +257,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.app.js">
+  <component name="RunManager" selected="Node.js.SpendingCategoriesTable.js">
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
     </configuration>
@@ -292,6 +278,7 @@
       <patterns />
     </configuration>
     <configuration name="AnzSpendingTable.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" nameIsGenerated="true" path-to-js-file="AnzSpendingTable.js" working-dir="$PROJECT_DIR$/Sources/Database" />
+    <configuration name="Config.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" nameIsGenerated="true" path-to-js-file="Config.js" working-dir="$PROJECT_DIR$/Sources/Config" />
     <configuration name="DailyInputsTable.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" nameIsGenerated="true" path-to-js-file="DailyInputsTable.js" working-dir="$PROJECT_DIR$/Sources/Database" />
     <configuration name="SpendingCategoriesTable.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" nameIsGenerated="true" path-to-js-file="SpendingCategoriesTable.js" working-dir="$PROJECT_DIR$/Sources/Database" />
     <configuration name="app.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" nameIsGenerated="true" path-to-js-file="app.js" working-dir="$PROJECT_DIR$" />
@@ -323,13 +310,15 @@
       <item itemvalue="Node.js.SpendingCategoriesTable.js" />
       <item itemvalue="Node.js.DailyInputsTable.js" />
       <item itemvalue="Node.js.AnzSpendingTable.js" />
+      <item itemvalue="Node.js.Config.js" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Node.js.SpendingCategoriesTable.js" />
+        <item itemvalue="Node.js.Config.js" />
         <item itemvalue="Node.js.app.js" />
         <item itemvalue="Node.js.AnzSpendingTable.js" />
         <item itemvalue="Node.js.DailyInputsTable.js" />
-        <item itemvalue="Node.js.SpendingCategoriesTable.js" />
       </list>
     </recent_temporary>
   </component>
@@ -345,12 +334,12 @@
       <updated>1550034887463</updated>
       <workItem from="1550034895178" duration="7974000" />
       <workItem from="1550223942098" duration="5713000" />
-      <workItem from="1550278732393" duration="7538000" />
+      <workItem from="1550278732393" duration="8201000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21225000" />
+    <option name="totallyTimeSpent" value="21888000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
@@ -374,10 +363,10 @@
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.33053514" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33053514" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32948583" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25262576" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25262576" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -547,34 +536,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Sources/Database/EmployeeTable.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-416">
-          <caret line="10" column="18" selection-start-line="10" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Sources/Database/HoursTable.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-853">
-          <caret line="45" column="26" selection-start-line="45" selection-end-line="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Sources/Database/DatabaseConnection.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="11" column="37" selection-start-line="11" selection-start-column="37" selection-end-line="11" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Sources/Database/DailyInputsTable.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="7" column="24" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/DailyRealData.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
@@ -589,17 +550,59 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Sources/Database/SpendingCategoriesTable.js">
+    <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1083">
-          <caret line="60" column="9" selection-start-line="60" selection-start-column="9" selection-end-line="60" selection-end-column="9" />
+        <state relative-caret-position="309">
+          <caret line="119" column="44" selection-start-line="119" selection-start-column="44" selection-end-line="119" selection-end-column="44" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
+    <entry file="file://$PROJECT_DIR$/Sources/Config/config.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="385">
-          <caret line="123" column="30" selection-start-line="123" selection-start-column="30" selection-end-line="123" selection-end-column="30" />
+        <state relative-caret-position="76">
+          <caret line="4" column="1" lean-forward="true" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sources/Config/Config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="14" column="2" selection-start-line="14" selection-start-column="2" selection-end-line="14" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sources/Database/DatabaseConnection.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sources/Database/HoursTable.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-839">
+          <caret line="45" column="26" selection-start-line="45" selection-end-line="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sources/Database/EmployeeTable.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-402">
+          <caret line="10" column="18" selection-start-line="10" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sources/Database/DailyInputsTable.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="7" column="24" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sources/Database/SpendingCategoriesTable.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="86" column="2" selection-start-line="86" selection-end-line="89" selection-end-column="5" />
         </state>
       </provider>
     </entry>

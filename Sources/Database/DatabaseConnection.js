@@ -1,4 +1,5 @@
 let mysql = require('mysql');
+let Config = require('../Config/Config');
 
 
 class DatabaseConnection {
@@ -6,11 +7,13 @@ class DatabaseConnection {
 
 
     static getConnection() {
+        let databaseName=Config.getDatabaseName();
+
         let connection = mysql.createConnection({
             host: 'localhost',
             user: 'marwan',
             password: 'Findumonde01',
-            database: 'test_database2'
+            database: databaseName
         });
         return connection;
     }
