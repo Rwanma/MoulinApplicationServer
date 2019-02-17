@@ -70,7 +70,6 @@ class DailyInputsTable {
 
 
                         let priceConfig = Config.getPriceConfig();
-                        console.log(priceConfig);
 
                         // Spending cost
                         totalMilkCoffeeSpending[work_date] = 0;

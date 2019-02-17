@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d64cbd9-f3ee-4972-954c-18fcdf363c1f" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sources/Config/Config.js" beforeDir="false" afterPath="$PROJECT_DIR$/Sources/Config/Config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sources/Config/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/Sources/Config/config.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Sources/Database/DailyInputsTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/Sources/Database/DailyInputsTable.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -29,8 +26,8 @@
       <file leaf-file-name="DailyInputsTable.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Sources/Database/DailyInputsTable.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="109">
-              <caret line="71" column="63" selection-start-line="71" selection-start-column="63" selection-end-line="71" selection-end-column="63" />
+            <state relative-caret-position="57">
+              <caret line="72" lean-forward="true" selection-start-line="72" selection-end-line="72" />
             </state>
           </provider>
         </entry>
@@ -116,9 +113,6 @@
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
-  </component>
-  <component name="NodeModulesDirectoryManager">
-    <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths>
@@ -278,12 +272,12 @@
       <workItem from="1550034895178" duration="7974000" />
       <workItem from="1550223942098" duration="5713000" />
       <workItem from="1550278732393" duration="10812000" />
-      <workItem from="1550385103998" duration="2107000" />
+      <workItem from="1550385103998" duration="2468000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26606000" />
+    <option name="totallyTimeSpent" value="26967000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
@@ -310,7 +304,7 @@
       <window_info id="npm" order="2" side_tool="true" />
       <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33053514" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32948583" />
-      <window_info content_ui="combo" id="Project" order="0" weight="0.25538972" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25538972" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -580,8 +574,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Sources/Database/DailyInputsTable.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="109">
-          <caret line="71" column="63" selection-start-line="71" selection-start-column="63" selection-end-line="71" selection-end-column="63" />
+        <state relative-caret-position="57">
+          <caret line="72" lean-forward="true" selection-start-line="72" selection-end-line="72" />
         </state>
       </provider>
     </entry>
