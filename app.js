@@ -11,6 +11,7 @@ let AnzSpendingTable = require('./Sources/Database/AnzSpendingTable');
 let SpendingCategoriesTable = require('./Sources/Database/SpendingCategoriesTable');
 let DailyInputsTable = require('./Sources/Database/DailyInputsTable');
 let DailyRealData = require('./Sources/AnzDataAnalysis/DataTransformer/DailyRealData');
+let LoginsTable = require('./Sources/Database/LoginsTable');
 
 
 let app = express();
@@ -211,6 +212,20 @@ let server = app.listen(3005, function () {
 
 
     // ***************************************************************************************************************************************
+
+
+
+    // ***************************************************************************************************************************************
+    // LOGINS
+    app.get("/GetLoginRole", function (req, res) {
+        let loginsTable = new LoginsTable();
+        console.log('Login Inputs: ' + req.query.login+ ' ' + req.query.password);
+        loginsTable.getLoginType(req.query.login, req.query.password, function (loginRole) {
+            res.status(200).send(loginRole);
+        });
+    });
+    // ***************************************************************************************************************************************
+
 
 
 });
