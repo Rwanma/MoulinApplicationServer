@@ -221,7 +221,7 @@ let server = app.listen(3005, function () {
         let loginsTable = new LoginsTable();
         console.log('Login Inputs: ' + req.query.login+ ' ' + req.query.password);
         loginsTable.getLoginType(req.query.login, req.query.password, function (loginRole) {
-            res.status(200).send(loginRole);
+            res.status(200).send({'role' : loginRole});
         });
     });
     // ***************************************************************************************************************************************
