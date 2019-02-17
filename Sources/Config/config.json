@@ -3,6 +3,12 @@
     "name": "test_database2",
     "host": "localhost",
     "user": "marwan",
-    "password": "xxxxx"
+    "password": "Findumonde01"
+  },
+  "prices": {
+    "coffee": -27,
+    "normalMilk": -2.34,
+    "soyMilk": -3.66,
+    "almondMilk": -3.3
   }
 }

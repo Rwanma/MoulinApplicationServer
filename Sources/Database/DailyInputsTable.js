@@ -1,5 +1,7 @@
 let DatabaseConnection = require('./DatabaseConnection.js');
 let Helper = require('../../Sources/Helpers/Helpers.js');
+let Config = require('../Config/Config');
+
 
 
 class DailyInputsTable {
@@ -10,7 +12,7 @@ class DailyInputsTable {
         let dbBeginDate = beginDate.getDateInDatabaseFormat();
         let dbEndDate = endDate.getDateInDatabaseFormat();
         let dbConnection = DatabaseConnection.getConnection();
-        dbConnection.query('SELECT DATE_FORMAT(work_date,\'%d/%m/%Y\') as work_date, cash_revenu, ftpos_revenu, coffee_bags, milk_cartons, soy_cartons ' +
+        dbConnection.query('SELECT DATE_FORMAT(work_date,\'%d/%m/%Y\') as work_date, cash_revenu, ftpos_revenu, coffee_bags, milk_cartons, soy_cartons, almond_cartons ' +
             'FROM DAILY_INPUTS WHERE work_date >= ? AND work_date <= ?', [dbBeginDate, dbEndDate], function (error, results) {
             dbConnection.end();
             if (error) throw error;
@@ -26,12 +28,13 @@ class DailyInputsTable {
 
 
             let cashRevenuArray = {}, ftposRevenuArray = {}, coffeeBagsArray = {}, milkCartonArray = {},
-                soyMilkArray = {}, emptyArray = {}, totalRevenu = {}, totalMilkCoffeeSpending = {}, totalDayEstimate = {};
+                soyMilkArray = {}, almondMilkArray = {}, emptyArray = {}, totalRevenu = {}, totalMilkCoffeeSpending = {}, totalDayEstimate = {};
             cashRevenuArray['Daily Input'] = 'Cash Revenu';
             ftposRevenuArray['Daily Input'] = 'FTPOS Revenu';
             coffeeBagsArray['Daily Input'] = 'Coffee Bags';
             milkCartonArray['Daily Input'] = 'Milk Cartons';
             soyMilkArray['Daily Input'] = 'Soy Milk Cartons';
+            almondMilkArray['Daily Input'] = 'Almond Milk Cartons';
             totalRevenu['Daily Input'] = 'Total Revenu';
             totalMilkCoffeeSpending['Daily Input'] = 'Total Milk/Coffee Spending';
             totalDayEstimate['Daily Input'] = 'Total Day Estimate';
@@ -48,6 +51,8 @@ class DailyInputsTable {
                         coffeeBagsArray[work_date] = result.coffee_bags;
                         milkCartonArray[work_date] = result.milk_cartons;
                         soyMilkArray[work_date] = result.soy_cartons;
+                        almondMilkArray[work_date] = result.almond_cartons;
+
 
                         // Cash Revenu
                         totalRevenu[work_date] = 0;
@@ -63,16 +68,23 @@ class DailyInputsTable {
                             totalRevenu[work_date] = undefined;
                         }
 
+
+                        let priceConfig = Config.getPriceConfig();
+                        console.log(priceConfig);
+
                         // Spending cost
                         totalMilkCoffeeSpending[work_date] = 0;
                         if (result.coffee_bags !== null) {
-                            totalMilkCoffeeSpending[work_date] += (parseInt(result.coffee_bags, 10) * -27);
+                            totalMilkCoffeeSpending[work_date] += (parseInt(result.coffee_bags, 10) * priceConfig.coffee);
                         }
                         if (result.milk_cartons !== null) {
-                            totalMilkCoffeeSpending[work_date] += (parseInt(result.milk_cartons, 10) * -5);
+                            totalMilkCoffeeSpending[work_date] += (parseInt(result.milk_cartons, 10) * priceConfig.normalMilk);
                         }
                         if (result.soy_cartons !== null) {
-                            totalMilkCoffeeSpending[work_date] += (parseInt(result.soy_cartons, 10) * -5);
+                            totalMilkCoffeeSpending[work_date] += (parseInt(result.soy_cartons, 10) * priceConfig.soyMilk);
+                        }
+                        if (result.almond_cartons !== null) {
+                            totalMilkCoffeeSpending[work_date] += (parseInt(result.almond_cartons, 10) * priceConfig.almondMilk);
                         }
                         totalDayEstimate[work_date] += totalMilkCoffeeSpending[work_date];
                         if (totalMilkCoffeeSpending[work_date] === 0) {
@@ -90,6 +102,7 @@ class DailyInputsTable {
             jsonObj.data.push(coffeeBagsArray);
             jsonObj.data.push(milkCartonArray);
             jsonObj.data.push(soyMilkArray);
+            jsonObj.data.push(almondMilkArray);
             jsonObj.data.push(emptyArray);
             jsonObj.data.push(totalRevenu);
             jsonObj.data.push(totalMilkCoffeeSpending);
@@ -119,7 +132,8 @@ class DailyInputsTable {
                             && (results[0].ftpos_revenu === 0 || results[0].ftpos_revenu === null)
                             && (results[0].coffee_bags === 0 || results[0].coffee_bags === null)
                             && (results[0].milk_cartons === 0 || results[0].milk_cartons === null)
-                            && (results[0].soy_cartons === 0 || results[0].soy_cartons === null)) {
+                            && (results[0].soy_cartons === 0 || results[0].soy_cartons === null)
+                            && (results[0].almond_cartons === 0 || results[0].almond_cartons === null)) {
                             dbConnection.query('DELETE FROM DAILY_INPUTS WHERE  work_date = ? ', [dbDate], function (error) {
                                 console.log(error);
                                 if (error) throw error;

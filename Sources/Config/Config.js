@@ -6,6 +6,11 @@ class Config {
         const config = require('./config.json');
         return(config.database);
     }
+
+    static getPriceConfig() {
+        const config = require('./config.json');
+        return(config.prices);
+    }
 }
 
 module.exports = Config;
