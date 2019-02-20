@@ -69,7 +69,7 @@ class EmployeeData {
             });
             Promise.all(promises).then(function () {
                 employeeThis.employeeData.sort(function(employeeA,employeeB){
-                    return(employeeA.id < employeeB.id);
+                    return(employeeA.id > employeeB.id);
                 });
 
                 callback(employeeThis.employeeData);

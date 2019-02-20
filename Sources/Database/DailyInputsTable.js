@@ -93,7 +93,7 @@ class DailyInputsTable {
                         if (result.almond_cartons !== null) {
                             totalMilkCoffeeSpending[work_date] += (parseInt(result.almond_cartons, 10) * priceConfig.almondMilk);
                         }
-                        totalDayEstimate[work_date] += totalMilkCoffeeSpending[work_date];
+                        totalDayEstimate[work_date] -= totalMilkCoffeeSpending[work_date];
                         if (totalMilkCoffeeSpending[work_date] === 0) {
                             totalMilkCoffeeSpending[work_date] = undefined;
                         }

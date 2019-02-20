@@ -39,10 +39,10 @@ class AnzSpendingTable {
 
 
     insertAllAnzSpendings(file) {
-        let anzTableThis = this;
         this.getAnzDataFromCsvToDatabase(file, function (anzSpendingArray) {
-            anzTableThis.connection.query('delete from ANZ_SPENDING', function () {
-                anzTableThis.connection.query('INSERT INTO ANZ_SPENDING(spending_date,  amount, spending_description ) VALUES ?',
+            let dbConnection = DatabaseConnection.getConnection();
+            dbConnection.query('delete from ANZ_SPENDING', function () {
+                dbConnection.query('INSERT INTO ANZ_SPENDING(spending_date,  amount, spending_description ) VALUES ?',
                     [anzSpendingArray], function (error) {
                         console.log(error);
                         if (error) throw error;
