@@ -24,7 +24,8 @@ class DailyInputsTable {
                 field: 'Daily Input',
                 pinned: 'left',
                 filter: 'agTextColumnFilter',
-                editable: editableTable
+                editable: editableTable,
+                sortable:false
             });
 
 
@@ -133,7 +134,10 @@ class DailyInputsTable {
 
             if (results.length !== 0) {
                 dbConnection.query('UPDATE DAILY_INPUTS SET ' + column + '=? WHERE work_date=?', [value, dbDate], function (error) {
-                    if (error) throw error;
+                    if (error) {
+                        console.log(error);
+                        throw error;
+                    }
                     dbConnection.query('SELECT * FROM DAILY_INPUTS WHERE work_date = ? ', [dbDate], function (error, results) {
                         if ((results[0].cash_revenu === 0 || results[0].cash_revenu === null)
                             && (results[0].ftpos_revenu === 0 || results[0].ftpos_revenu === null)

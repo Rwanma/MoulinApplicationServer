@@ -175,12 +175,11 @@ let server = app.listen(3005, function () {
 
     //EMPLOYEE HOURS UPDATE
     app.get("/UpdateEmployeeHourTable", function (req, res) {
-        console.log('Update Table: ' + req.query.employeeID + ' ' + req.query.dateSelected + ' ' + req.query.paymentType + ' ' + req.query.hoursChanged
-            + ' ' + req.query.beginDate + ' ' + req.query.endDate);
+        console.log('Update Table: ' + req.query.employeeID + ' ' + req.query.dateSelected + ' ' + req.query.paymentType + ' ' + req.query.hoursChanged + ' ' + req.query.beginDate + ' ' + req.query.endDate);
         let hoursTable = new HoursTable();
-        hoursTable.updateHours(req.query.employeeID, new Helper.MyDateClass(req.query.dateSelected), req.query.paymentType, parseInt(req.query.hoursChanged, 10), function (employeeHoursJson) {
+        hoursTable.updateHours(req.query.employeeID, new Helper.MyDateClass(req.query.dateSelected), req.query.paymentType, parseInt(req.query.hoursChanged, 10), function () {
             let employeeHours = new EmployeeHours();
-            console.log('Employee Hours : ' + req.query.beginDate + ' ' + req.query.endDate);
+            //console.log('Employee Hours : ' + req.query.beginDate + ' ' + req.query.endDate);
             employeeHours.getHoursForEmployeesInJson(new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), function (employeeHoursJson) {
                 res.status(200).send(employeeHoursJson);
             });

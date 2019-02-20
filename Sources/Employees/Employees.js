@@ -1,5 +1,3 @@
-
-
 let EmployeeTable = require('../Database/EmployeeTable');
 let HoursTable = require('../Database/HoursTable');
 let Helpers = require('../Helpers/Helpers')
@@ -47,21 +45,14 @@ class EmployeeData {
     }
 
 
-    /*    addDateHourUnitForEmployee(dateHourUnit) {
-            this.employeeData.forEach(function (employee) {
-                if (employee.id === dateHourUnit.employeeId) {
-                    employee.addDateHourUnitInEmployee(dateHourUnit);
-                }
-            });
-        }*/
-
-
     loadEmployeesAndHours(callback) {
         let employeeDatabase = new EmployeeTable();
         let hoursTable = new HoursTable();
         let promises = [];
         let employeeThis = this;
         employeeDatabase.getAllDatabaseEmployees(function (databaseEmployees) {
+            //console.log(databaseEmployees);
+
             databaseEmployees.map((employees) => {
                 let employee = new Employee(employees.employee_id, employees.first_name, employees.last_name, employees.salary_cash, employees.salary_transfer);
                 promises.push(new Promise((resolve) => {
@@ -77,17 +68,22 @@ class EmployeeData {
                 }));
             });
             Promise.all(promises).then(function () {
+                employeeThis.employeeData.sort(function(employeeA,employeeB){
+                    return(employeeA.id < employeeB.id);
+                });
+
                 callback(employeeThis.employeeData);
             });
         });
     }
-
 }
 
-/*let employeeData = new EmployeeData();
+/*
+let employeeData = new EmployeeData();
 employeeData.loadEmployeesAndHours(function (employeeData) {
     console.log(employeeData);
-});*/
+});
+*/
 
 
 module.exports = {

@@ -6,7 +6,7 @@ class EmployeeTable {
 
     getAllDatabaseEmployees(callback) {
         let dbConnection = DatabaseConnection.getConnection();
-        dbConnection.query('select * from EMPLOYEES', function (error, results) {
+        dbConnection.query('select * from EMPLOYEES order by employee_id', function (error, results) {
             if (error) throw error;
             dbConnection.end();
             callback(results);
