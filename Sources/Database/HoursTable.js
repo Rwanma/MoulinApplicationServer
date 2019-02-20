@@ -69,7 +69,6 @@ class HoursTable {
                     dbConnection.query('INSERT INTO EMPLOYEE_HOURS(employee_id, payment_type, work_date, hours) VALUES (?,?,?,?)', [employee_id, payment_type, date, hours], function (error) {
                         if (error) throw error;
                         dbConnection.end();
-                        //hoursThis.getAllHours(callback);
                         callback();
                     });
                 } else {
@@ -81,14 +80,12 @@ class HoursTable {
                     dbConnection.query('DELETE FROM EMPLOYEE_HOURS WHERE  employee_id=? AND  payment_type=? AND work_date = ? ', [employee_id, payment_type, date], function (error) {
                         if (error) throw error;
                         dbConnection.end();
-                        //hoursThis.getAllHours(callback);
                         callback();
                     });
                 } else {
                     dbConnection.query('UPDATE EMPLOYEE_HOURS SET ? WHERE employee_id=? AND payment_type=? AND work_date = ? ', [{ hours: hours }, employee_id, payment_type, date], function (error) {
                         if (error) throw error;
                         dbConnection.end();
-                        //hoursThis.getAllHours(callback);
                         callback();
                     });
                 }
