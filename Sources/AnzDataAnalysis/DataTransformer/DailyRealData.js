@@ -19,20 +19,14 @@ class DailyRealData {
                 employeeHours.getHoursForEmployeesInJson(beginDate, endDate, function (employeeHours) {
                     dailyInputsTable.getDailyInputsInJson(beginDate, endDate, 'true', function (dailyInputs) {
 
-                        //jsonDailyRealData.columns = JSON.parse(JSON.stringify(anzSpending.columns));
+                        jsonDailyRealData.columns[0] = { headerName: 'Category', field: 'Category', pinned: 'left', filter: 'agTextColumnFilter', editable: false };
 
-                        console.log('*************************');
-                        console.log(jsonDailyRealData.columns);
-                        console.log('*************************');
-
-
-                        jsonDailyRealData.columns[0] = { headerName: 'Category', field: 'Category', pinned: 'left', filter: 'agTextColumnFilter' , editable:false};
-
-                        let employeeTotal = {}, anzTotal = {}, revenueTotal = {}, cafeDailyCosts = {}, dailyTotalReal = {}, dailyTotalEstimate = {};
+                        let employeeTotal = {}, anzTotal = {}, revenueTotal = {}, cafeDailyCosts = {}, dailyTotalReal = {}, dailyTotalEstimate = {}, dailyRent = {};
                         employeeTotal['Category'] = 'Employees Day Total';
                         revenueTotal['Category'] = 'Revenue Day Total';
                         anzTotal['Category'] = 'ANZ Total day';
                         cafeDailyCosts['Category'] = 'Cafe daily cost Total';
+                        dailyRent['Category'] = 'Daily Rent';
                         dailyTotalReal['Category'] = 'NET TOTAL';
                         dailyTotalEstimate['Category'] = 'NET TOTAL';
 
@@ -46,29 +40,37 @@ class DailyRealData {
                             employeeTotal[work_date] = employeeHours.totalPayment[0][work_date];
                             anzTotal[work_date] = anzSpending.totalAnzSpending[0][work_date];
                             cafeDailyCosts[work_date] = dailyInputs.totalMilkCoffeeSpending[0][work_date];
+                            dailyRent[work_date] = dailyInputs.totalRent[0][work_date];
 
-                            dailyTotalReal[work_date] = revenueTotal[work_date] - employeeTotal[work_date] + anzTotal[work_date];
-                            dailyTotalEstimate[work_date] = revenueTotal[work_date] - employeeTotal[work_date] - cafeDailyCosts[work_date];
+                            let dayRevenueTotal = (revenueTotal[work_date] === undefined) ? 0 : revenueTotal[work_date];
+                            let dayEmployeeTotal = (employeeTotal[work_date] === undefined) ? 0 : employeeTotal[work_date];
+                            let dayAnzTotal = (anzTotal[work_date] === undefined) ? 0 : anzTotal[work_date];
+                            let dayCafeDailyCosts = (cafeDailyCosts[work_date] === undefined) ? 0 : cafeDailyCosts[work_date];
+                            let dayDailyRent = (dailyRent[work_date] === undefined) ? 0 : dailyRent[work_date];
+
+                            dailyTotalReal[work_date] = dayRevenueTotal - dayEmployeeTotal + dayAnzTotal - dayDailyRent;
+                            dailyTotalEstimate[work_date] = dayRevenueTotal - dayEmployeeTotal - dayCafeDailyCosts - dayDailyRent;
                         });
 
                         jsonDailyRealData.dataReal.push(revenueTotal);
                         jsonDailyRealData.dataReal.push(anzTotal);
                         jsonDailyRealData.dataReal.push(employeeTotal);
+                        jsonDailyRealData.dataReal.push(dailyRent);
                         jsonDailyRealData.dataReal.push(dailyTotalReal);
 
                         jsonDailyRealData.dataEstimate.push(revenueTotal);
                         jsonDailyRealData.dataEstimate.push(cafeDailyCosts);
                         jsonDailyRealData.dataEstimate.push(employeeTotal);
+                        jsonDailyRealData.dataEstimate.push(dailyRent);
                         jsonDailyRealData.dataEstimate.push(dailyTotalEstimate);
                         callback(jsonDailyRealData);
                     });
                 });
             });
-
         });
-
     }
 }
 
 
 module.exports = DailyRealData;
+

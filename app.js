@@ -1,4 +1,3 @@
-
 let express = require("express");
 let bodyParser = require("body-parser");
 let DataTransormer = require("./Sources/AnzDataAnalysis/DataTransformer/DataTransformer.js");
@@ -6,7 +5,7 @@ let EmployeeHours = require("./Sources/Employees/EmployeeHours");
 let Helper = require('./Sources/Helpers/Helpers.js');
 let EmployeeTable = require('./Sources/Database/EmployeeTable');
 let HoursTable = require('./Sources/Database/HoursTable');
-var IncomingForm = require('formidable').IncomingForm;
+let IncomingForm = require('formidable').IncomingForm;
 let AnzSpendingTable = require('./Sources/Database/AnzSpendingTable');
 let SpendingCategoriesTable = require('./Sources/Database/SpendingCategoriesTable');
 let DailyInputsTable = require('./Sources/Database/DailyInputsTable');
@@ -45,6 +44,7 @@ let server = app.listen(3005, function () {
 
     app.post('/uploadAnzCsv', function (req, res) {
         res.status(200).send('');
+        console.log('uploading ANZ csv file');
         let form = new IncomingForm();
         form.uploadDir = 'Sources/AnzDataAnalysis/CsvFiles';
         form.parse(req, function (err, fields, files) {
@@ -113,7 +113,7 @@ let server = app.listen(3005, function () {
     app.get("/getFinancialDailyData", function (req, res) {
         let dailyRealData = new DailyRealData();
         dailyRealData.getDailyData(new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), function (JsonData) {
-            console.log(JsonData);
+            //console.log(JsonData);
             res.status(200).send(JsonData);
         });
     });
@@ -126,7 +126,7 @@ let server = app.listen(3005, function () {
         let employeeTable = new EmployeeTable();
         employeeTable.getAllDatabaseEmployees(function (EmployeeDataJson) {
             res.status(200).send(EmployeeDataJson);
-            console.log('Employee Data : ' + EmployeeDataJson);
+            //console.log('Employee Data : ' + EmployeeDataJson);
         });
 
     });
@@ -137,7 +137,7 @@ let server = app.listen(3005, function () {
         let employeeDatabase = new EmployeeTable();
         employeeDatabase.addEmployee(req.query.firstName, req.query.lastName, req.query.salaryTransfer, req.query.salaryCash, function (EmployeeDataJson) {
             res.status(200).send(EmployeeDataJson);
-            console.log('Employee Data : ' + EmployeeDataJson);
+            //console.log('Employee Data : ' + EmployeeDataJson);
         });
     });
 
@@ -146,7 +146,7 @@ let server = app.listen(3005, function () {
         let employeeDatabase = new EmployeeTable();
         employeeDatabase.modifyEmployee(req.query.id, req.query.firstName, req.query.lastName, req.query.salaryTransfer, req.query.salaryCash, function (EmployeeDataJson) {
             res.status(200).send(EmployeeDataJson);
-            console.log('Employee Data : ' + EmployeeDataJson);
+            //console.log('Employee Data : ' + EmployeeDataJson);
         });
     });
 
@@ -156,7 +156,7 @@ let server = app.listen(3005, function () {
         let employeeDatabase = new EmployeeTable();
         employeeDatabase.deleteEmployee(req.query.id, function (EmployeeDataJson) {
             res.status(200).send(EmployeeDataJson);
-            console.log('Employee Data : ' + EmployeeDataJson);
+            //console.log('Employee Data : ' + EmployeeDataJson);
         });
     });
     // ***************************************************************************************************************************************
@@ -219,9 +219,9 @@ let server = app.listen(3005, function () {
     // LOGINS
     app.get("/GetLoginRole", function (req, res) {
         let loginsTable = new LoginsTable();
-        console.log('Login Inputs: ' + req.query.login+ ' ' + req.query.password);
+        console.log('Login Inputs: ' + req.query.login + ' ' + req.query.password);
         loginsTable.getLoginType(req.query.login, req.query.password, function (loginRole) {
-            res.status(200).send({'role' : loginRole});
+            res.status(200).send({ 'role': loginRole });
         });
     });
     // ***************************************************************************************************************************************

@@ -1,3 +1,4 @@
+
 let DatabaseConnection = require('./DatabaseConnection.js');
 let Helper = require('../../Sources/Helpers/Helpers.js');
 let Config = require('../Config/Config');
@@ -8,7 +9,7 @@ class DailyInputsTable {
 
 
     getDailyInputsInJson(beginDate, endDate, allowTableChanges, callback) {
-        let editableTable = (allowTableChanges==='true'? true:false);
+        let editableTable = (allowTableChanges === 'true' ? true : false);
         let dbBeginDate = beginDate.getDateInDatabaseFormat();
         let dbEndDate = endDate.getDateInDatabaseFormat();
         let dbConnection = DatabaseConnection.getConnection();
@@ -17,7 +18,7 @@ class DailyInputsTable {
             dbConnection.end();
             if (error) throw error;
             let dateArray = Helper.getDatesRangeArray(Helper.transformDayMonthYearToDate(beginDate.dateInDDMMYYYFormat), Helper.transformDayMonthYearToDate(endDate.dateInDDMMYYYFormat));
-            let jsonObj = { columns: [], data: [], dataSalary: [], totalMilkCoffeeSpending: [], totalRevenu: [] };
+            let jsonObj = { columns: [], data: [], dataSalary: [], totalMilkCoffeeSpending: [], totalRevenu: [], totalRent: [] };
             jsonObj.columns.push({
                 headerName: 'Daily Input',
                 field: 'Daily Input',
@@ -28,7 +29,8 @@ class DailyInputsTable {
 
 
             let cashRevenuArray = {}, ftposRevenuArray = {}, coffeeBagsArray = {}, milkCartonArray = {},
-                soyMilkArray = {}, almondMilkArray = {}, emptyArray = {}, totalRevenu = {}, totalMilkCoffeeSpending = {}, totalDayEstimate = {};
+                soyMilkArray = {}, almondMilkArray = {}, emptyArray = {}, totalRevenu = {}, totalMilkCoffeeSpending = {},
+                totalDayEstimate = {}, rent = {};
             cashRevenuArray['Daily Input'] = 'Cash Revenu';
             ftposRevenuArray['Daily Input'] = 'FTPOS Revenu';
             coffeeBagsArray['Daily Input'] = 'Coffee Bags';
@@ -38,6 +40,8 @@ class DailyInputsTable {
             totalRevenu['Daily Input'] = 'Total Revenu';
             totalMilkCoffeeSpending['Daily Input'] = 'Total Milk/Coffee Spending';
             totalDayEstimate['Daily Input'] = 'Total Day Estimate';
+            rent['Daily Input'] = 'Rent';
+            let priceConfig = Config.getPriceConfig();
 
 
             dateArray.forEach(function (work_date) {
@@ -52,6 +56,9 @@ class DailyInputsTable {
                         milkCartonArray[work_date] = result.milk_cartons;
                         soyMilkArray[work_date] = result.soy_cartons;
                         almondMilkArray[work_date] = result.almond_cartons;
+                        rent[work_date] = priceConfig.rent;
+
+
 
 
                         // Cash Revenu
@@ -69,7 +76,7 @@ class DailyInputsTable {
                         }
 
 
-                        let priceConfig = Config.getPriceConfig();
+
 
                         // Spending cost
                         totalMilkCoffeeSpending[work_date] = 0;
@@ -109,6 +116,7 @@ class DailyInputsTable {
             jsonObj.data.push(totalDayEstimate);
             jsonObj.totalRevenu.push(totalRevenu);
             jsonObj.totalMilkCoffeeSpending.push(totalMilkCoffeeSpending);
+            jsonObj.totalRent.push(rent);
 
             callback(jsonObj);
         });

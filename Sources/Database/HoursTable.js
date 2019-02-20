@@ -6,7 +6,7 @@ class HoursTable {
 
     getAllHours(callback) {
         let dbConnection = DatabaseConnection.getConnection();
-        dbConnection.query('select * from EMPLOYEE_HOURS', function (error, results) {
+        dbConnection.query('select * from EMPLOYEE_HOURS order by employee_id, payment_type', function (error, results) {
             if (error) throw error;
             dbConnection.end();
             callback(results);
