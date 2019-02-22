@@ -34,9 +34,11 @@ class DataTransformer {
                     }
 
                     if (categoryString !== '' && categoryString !== undefined) {
-                        spending = new DataSpendingClass.SpendingUnit(categoryString, arrayElement.amount, arrayElement.spending_date);
-                        mySpendings.addSpendingUnit(spending);
-                        categoryString = '';
+                        if(arrayElement.amount < 0) {
+                            spending = new DataSpendingClass.SpendingUnit(categoryString, arrayElement.amount, arrayElement.spending_date);
+                            mySpendings.addSpendingUnit(spending);
+                            categoryString = '';
+                        }
                     }
                 }
                 return callback(mySpendings);
