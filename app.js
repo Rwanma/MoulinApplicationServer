@@ -144,7 +144,7 @@ let server = app.listen(3005, function () {
 
     app.get("/modifyEmployee", function (req, res) {
         let employeeDatabase = new EmployeeTable();
-        employeeDatabase.modifyEmployee(req.query.id, req.query.firstName, req.query.lastName, req.query.salaryTransfer, req.query.salaryCash, function (EmployeeDataJson) {
+        employeeDatabase.modifyEmployee(req.query.id, req.query.firstName, req.query.lastName, req.query.salaryCash, req.query.salaryTransfer, function (EmployeeDataJson) {
             res.status(200).send(EmployeeDataJson);
             //console.log('Employee Data : ' + EmployeeDataJson);
         });

@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d64cbd9-f3ee-4972-954c-18fcdf363c1f" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/DataTransformer.js" beforeDir="false" afterPath="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/DataTransformer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,11 +14,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3439">
-              <caret line="181" column="14" selection-start-line="181" selection-start-column="14" selection-end-line="181" selection-end-column="14" />
+            <state relative-caret-position="328">
+              <caret line="146" column="117" selection-start-line="146" selection-start-column="117" selection-end-line="146" selection-end-column="117" />
             </state>
           </provider>
         </entry>
@@ -45,8 +44,8 @@
       <file leaf-file-name="EmployeeTable.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Sources/Database/EmployeeTable.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="8" column="70" selection-start-line="8" selection-start-column="70" selection-end-line="8" selection-end-column="70" />
+            <state relative-caret-position="260">
+              <caret line="29" column="4" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -60,11 +59,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DataTransformer.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DataTransformer.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/DataTransformer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="760">
-              <caret line="40" column="25" selection-start-line="40" selection-start-column="25" selection-end-line="40" selection-end-column="25" />
+            <state relative-caret-position="323">
+              <caret line="17" column="28" lean-forward="true" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -126,6 +125,7 @@
       <find>DateHourUnit</find>
       <find>anzTableThis.connection</find>
       <find>totalDayEstimate</find>
+      <find>modify</find>
     </findStrings>
     <replaceStrings>
       <replace>&quot;</replace>
@@ -153,13 +153,13 @@
         <option value="$PROJECT_DIR$/Sources/Database/LoginsTable.js" />
         <option value="$PROJECT_DIR$/Sources/Config/config.json" />
         <option value="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/DailyRealData.js" />
-        <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/Sources/Database/EmployeeTable.js" />
         <option value="$PROJECT_DIR$/Sources/Database/HoursTable.js" />
         <option value="$PROJECT_DIR$/Sources/Database/AnzSpendingTable.js" />
         <option value="$PROJECT_DIR$/Sources/Employees/Employees.js" />
         <option value="$PROJECT_DIR$/Sources/Database/DailyInputsTable.js" />
         <option value="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/DataTransformer.js" />
+        <option value="$PROJECT_DIR$/app.js" />
       </list>
     </option>
   </component>
@@ -356,12 +356,12 @@
       <workItem from="1550483233689" duration="4742000" />
       <workItem from="1550577537358" duration="2637000" />
       <workItem from="1550620837668" duration="15995000" />
-      <workItem from="1550830038420" duration="119000" />
+      <workItem from="1550830038420" duration="811000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="56135000" />
+    <option name="totallyTimeSpent" value="56827000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
@@ -720,24 +720,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3439">
-          <caret line="181" column="14" selection-start-line="181" selection-start-column="14" selection-end-line="181" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Sources/Database/AnzSpendingTable.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1235">
           <caret line="65" selection-start-line="65" selection-end-line="65" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Sources/Database/EmployeeTable.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="8" column="70" selection-start-line="8" selection-start-column="70" selection-end-line="8" selection-end-column="70" />
         </state>
       </provider>
     </entry>
@@ -771,8 +757,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/DataTransformer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="760">
-          <caret line="40" column="25" selection-start-line="40" selection-start-column="25" selection-end-line="40" selection-end-column="25" />
+        <state relative-caret-position="323">
+          <caret line="17" column="28" lean-forward="true" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sources/Database/EmployeeTable.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="29" column="4" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="328">
+          <caret line="146" column="117" selection-start-line="146" selection-start-column="117" selection-end-line="146" selection-end-column="117" />
         </state>
       </provider>
     </entry>
