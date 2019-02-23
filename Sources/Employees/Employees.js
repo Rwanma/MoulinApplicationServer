@@ -51,8 +51,6 @@ class EmployeeData {
         let promises = [];
         let employeeThis = this;
         employeeDatabase.getAllDatabaseEmployees(function (databaseEmployees) {
-            //console.log(databaseEmployees);
-
             databaseEmployees.map((employees) => {
                 let employee = new Employee(employees.employee_id, employees.first_name, employees.last_name, employees.salary_cash, employees.salary_transfer);
                 promises.push(new Promise((resolve) => {
@@ -68,22 +66,18 @@ class EmployeeData {
                 }));
             });
             Promise.all(promises).then(function () {
-                employeeThis.employeeData.sort(function(employeeA,employeeB){
-                    return(employeeA.id > employeeB.id);
-                });
-
+                employeeThis.employeeData.sort((employeeA, employeeB) => (employeeA.id - employeeB.id));
                 callback(employeeThis.employeeData);
-            });
-        });
+            })
+        })
     }
 }
 
-/*
-let employeeData = new EmployeeData();
+
+/*let employeeData = new EmployeeData();
 employeeData.loadEmployeesAndHours(function (employeeData) {
     console.log(employeeData);
-});
-*/
+});*/
 
 
 module.exports = {
