@@ -1,9 +1,9 @@
 {
   "database": {
-    "name": "test_database2",
+    "name": "xxxxxxx",
     "host": "localhost",
     "user": "marwan",
-    "password": "Findumonde01"
+    "password": "xxxxxxx"
   },
   "prices": {
     "coffee": 27,
