@@ -1,13 +1,18 @@
 let DatabaseConnection = require('./DatabaseConnection.js');
+let Logger = require('../../Sources/Logger/Logger');
+let logger = new Logger();
 
 
 class LoginsTable {
 
 
     getLoginType(login, password, callback) {
+        logger.log('LOGIN_TABLE - getLoginType');
         let dbConnection = DatabaseConnection.getConnection();
         dbConnection.query('select * from LOGINS WHERE login=?', [login], function (error, results) {
-            if (error) throw error;
+            if (error){
+                logger.log('LOGIN_TABLE - DATABASE ERROR getLoginType: ' + error.sqlMessage);
+            }
             dbConnection.end();
 
             let loginRole = '';

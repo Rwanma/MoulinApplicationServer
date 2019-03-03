@@ -11,6 +11,11 @@ class Config {
         const config = require('./config.json');
         return(config.prices);
     }
+
+    static getLoggerConfig() {
+        const config = require('./config.json');
+        return(config.logs);
+    }
 }
 
 module.exports = Config;

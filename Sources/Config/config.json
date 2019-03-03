@@ -1,8 +1,8 @@
 {
   "database": {
-    "name": "xxxxxxx",
+    "name": "test_database2",
     "host": "localhost",
-    "user": "marwan",
+    "user": "root",
     "password": "xxxxxxx"
   },
   "prices": {
@@ -11,5 +11,8 @@
     "soyMilk": 3.66,
     "almondMilk": 3.3,
     "rent" : 237
+  },
+  "logs": {
+    "directory": "./logs"
   }
 }

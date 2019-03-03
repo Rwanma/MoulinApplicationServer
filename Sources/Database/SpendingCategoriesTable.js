@@ -1,15 +1,15 @@
 let DatabaseConnection = require('./DatabaseConnection.js');
 let ExcelReader = require('node-excel-stream').ExcelReader;
 const fs = require('fs');
+let Logger = require('../../Sources/Logger/Logger');
+let logger = new Logger();
 
 
 class SpendingCategoriesTable {
 
 
     getCategoriesFromCsvToDatabase(file, callback) {
-        //let file = '../AnzDataAnalysis/CsvFiles/configLine.xlsx';
-        //let file = 'Sources/AnzDataAnalysis/CsvFiles/configLine.xlsx';
-
+        logger.log('SPENDING_CATEGORY - getCategoriesFromCsvToDatabase');
         let mySheets = {
             sheets: [{
                 name: 'Data',
@@ -33,14 +33,17 @@ class SpendingCategoriesTable {
         });
     };
 
+
+
     insertCategoryInDatabaseFromCsvFormat(file) {
         let dbConnection = DatabaseConnection.getConnection();
         this.getCategoriesFromCsvToDatabase(file, function (categoryArray) {
             dbConnection.query('delete from SPENDING_CATEGORIES', function () {
                 dbConnection.query('INSERT INTO SPENDING_CATEGORIES(categories) VALUES ?',
                     [categoryArray], function (error) {
-                        console.log(error);
-                        if (error) throw error;
+                        if (error){
+                            logger.log('SPENDING_CATEGORY - DATABASE ERROR insertCategoryInDatabaseFromCsvFormat: ' + error.sqlMessage);
+                        }
                         dbConnection.end();
                     });
             });
@@ -48,9 +51,12 @@ class SpendingCategoriesTable {
     }
 
     getAllCategoriesFromDatabase(callback) {
+        logger.log('SPENDING_CATEGORY - getAllCategoriesFromDatabase');
         let dbConnection = DatabaseConnection.getConnection();
         dbConnection.query('select * from SPENDING_CATEGORIES', function (error, results) {
-            if (error) throw error;
+            if (error){
+                logger.log('SPENDING_CATEGORY - DATABASE ERROR getAllCategoriesFromDatabase: ' + error.sqlMessage);
+            }
             dbConnection.end();
             callback(results);
         });
@@ -58,11 +64,14 @@ class SpendingCategoriesTable {
 
 
     addCategory(category, callback) {
+        logger.log('SPENDING_CATEGORY - addCategory: ' + category);
         let spendingCategoryThis = this;
         let dbConnection = DatabaseConnection.getConnection();
         dbConnection.query(
             'INSERT INTO SPENDING_CATEGORIES(categories) VALUES (?)', [category], function (error) {
-                if (error) throw error;
+                if (error){
+                    logger.log('SPENDING_CATEGORY - DATABASE ERROR addCategory: ' + error.sqlMessage);
+                }
                 dbConnection.end();
                 spendingCategoryThis.getAllCategoriesFromDatabase(callback);
             });
@@ -71,10 +80,13 @@ class SpendingCategoriesTable {
 
 
     deleteCategory(category, callback) {
+        logger.log('SPENDING_CATEGORY - deleteCategory: ' + category);
         let spendingCategoryThis = this;
         let dbConnection = DatabaseConnection.getConnection();
         dbConnection.query('DELETE FROM SPENDING_CATEGORIES WHERE categories=?', [category], function (error) {
-            if (error) throw error;
+            if (error){
+                logger.log('SPENDING_CATEGORY - DATABASE ERROR deleteCategory: ' + error.sqlMessage);
+            }
             dbConnection.end();
             spendingCategoryThis.getAllCategoriesFromDatabase(callback);
         });
@@ -86,14 +98,11 @@ module.exports = SpendingCategoriesTable;
 
 /*
 spendingCategoriesTable = new SpendingCategoriesTable();
-spendingCategoriesTable.getAllCategoriesFromDatabase(function (data) {
-    console.log(data);
-});
-*/
+
 
 
 //spendingCategoriesTable.insertCategoryInDatabaseFromCsvFormat();
-/*
-spendingCategoriesTable.insertCategoryInDatabaseFromCsvFormat(function (data) {
+spendingCategoriesTable.getAllCategoriesFromDatabase(function () {
 
-});*/
+});
+*/

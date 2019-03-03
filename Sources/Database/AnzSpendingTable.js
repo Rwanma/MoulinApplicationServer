@@ -2,12 +2,15 @@ let DatabaseConnection = require('./DatabaseConnection.js');
 let ExcelReader = require('node-excel-stream').ExcelReader;
 const fs = require('fs');
 let Helper = require('../Helpers/Helpers.js');
+let Logger = require('../../Sources/Logger/Logger');
+let logger = new Logger();
 
 
 class AnzSpendingTable {
 
 
     getAnzDataFromCsvToDatabase(file, callback) {
+        logger.log('ANZ_SPENDING_TABLE - getAnzDataFromCsvToDatabase');
         let mySheets = {
             sheets: [{
                 name: 'Data',
@@ -39,13 +42,15 @@ class AnzSpendingTable {
 
 
     insertAllAnzSpendings(file) {
+        logger.log('ANZ_SPENDING_TABLE - insertAllAnzSpendings');
         this.getAnzDataFromCsvToDatabase(file, function (anzSpendingArray) {
             let dbConnection = DatabaseConnection.getConnection();
             dbConnection.query('delete from ANZ_SPENDING', function () {
                 dbConnection.query('INSERT INTO ANZ_SPENDING(spending_date,  amount, spending_description ) VALUES ?',
                     [anzSpendingArray], function (error) {
-                        console.log(error);
-                        if (error) throw error;
+                        if (error){
+                            logger.log('ANZ_SPENDING_TABLE - DATABASE ERROR insertAllAnzSpendings: ' + error.sqlMessage);
+                        }
                     });
             });
         });
@@ -54,9 +59,12 @@ class AnzSpendingTable {
 
 
     getAllAnzSpendingFromTable(callback) {
+        logger.log('ANZ_SPENDING_TABLE - getAllAnzSpendingFromTable');
         let dbConnection = DatabaseConnection.getConnection();
         dbConnection.query('select DATE_FORMAT(spending_date,\'%d/%m/%Y\') as spending_date, amount, spending_description from ANZ_SPENDING', function (error, results) {
-            if (error) throw error;
+            if (error){
+                logger.log('ANZ_SPENDING_TABLE - DATABASE ERROR getAllAnzSpendingFromTable: ' + error.sqlMessage);
+            }
             dbConnection.end();
             callback(results);
         });

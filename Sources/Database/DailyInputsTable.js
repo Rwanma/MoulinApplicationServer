@@ -1,14 +1,15 @@
-
 let DatabaseConnection = require('./DatabaseConnection.js');
 let Helper = require('../../Sources/Helpers/Helpers.js');
 let Config = require('../Config/Config');
-
+let Logger = require('../../Sources/Logger/Logger');
+let logger = new Logger();
 
 
 class DailyInputsTable {
 
 
     getDailyInputsInJson(beginDate, endDate, allowTableChanges, callback) {
+        logger.log('DAILY_INPUT_TABLE - getDailyInputsInJson');
         let editableTable = (allowTableChanges === 'true' ? true : false);
         let dbBeginDate = beginDate.getDateInDatabaseFormat();
         let dbEndDate = endDate.getDateInDatabaseFormat();
@@ -16,7 +17,9 @@ class DailyInputsTable {
         dbConnection.query('SELECT DATE_FORMAT(work_date,\'%d/%m/%Y\') as work_date, cash_revenu, ftpos_revenu, coffee_bags, milk_cartons, soy_cartons, almond_cartons ' +
             'FROM DAILY_INPUTS WHERE work_date >= ? AND work_date <= ?', [dbBeginDate, dbEndDate], function (error, results) {
             dbConnection.end();
-            if (error) throw error;
+            if (error){
+                logger.log('DAILY_INPUT_TABLE - DATABASE ERROR getDailyInputsInJson: ' + error.sqlMessage);
+            }
             let dateArray = Helper.getDatesRangeArray(Helper.transformDayMonthYearToDate(beginDate.dateInDDMMYYYFormat), Helper.transformDayMonthYearToDate(endDate.dateInDDMMYYYFormat));
             let jsonObj = { columns: [], data: [], dataSalary: [], totalMilkCoffeeSpending: [], totalRevenu: [], totalRent: [] };
             jsonObj.columns.push({
@@ -127,16 +130,17 @@ class DailyInputsTable {
 
 
     updateInputTable(work_date, column, value, callback) {
+        logger.log('DAILY_INPUT_TABLE - updateInputTable');
         let dbDate = work_date.getDateInDatabaseFormat();
         let dbConnection = DatabaseConnection.getConnection();
         dbConnection.query('SELECT * FROM DAILY_INPUTS WHERE work_date = ? ', [dbDate], function (error, results) {
-            if (error) throw error;
-
+            if (error){
+                logger.log('DAILY_INPUT_TABLE - DATABASE ERROR updateInputTable(select): ' + error.sqlMessage);
+            }
             if (results.length !== 0) {
                 dbConnection.query('UPDATE DAILY_INPUTS SET ' + column + '=? WHERE work_date=?', [value, dbDate], function (error) {
-                    if (error) {
-                        console.log(error);
-                        throw error;
+                    if (error){
+                        logger.log('DAILY_INPUT_TABLE - DATABASE ERROR updateInputTable(update): ' + error.sqlMessage);
                     }
                     dbConnection.query('SELECT * FROM DAILY_INPUTS WHERE work_date = ? ', [dbDate], function (error, results) {
                         if ((results[0].cash_revenu === 0 || results[0].cash_revenu === null)
@@ -146,8 +150,9 @@ class DailyInputsTable {
                             && (results[0].soy_cartons === 0 || results[0].soy_cartons === null)
                             && (results[0].almond_cartons === 0 || results[0].almond_cartons === null)) {
                             dbConnection.query('DELETE FROM DAILY_INPUTS WHERE  work_date = ? ', [dbDate], function (error) {
-                                console.log(error);
-                                if (error) throw error;
+                                if (error){
+                                    logger.log('DAILY_INPUT_TABLE - DATABASE ERROR updateInputTable(delete): ' + error.sqlMessage);
+                                }
                                 dbConnection.end();
                                 callback();
                             });
@@ -159,8 +164,9 @@ class DailyInputsTable {
                 });
             } else if (value !== 0) {
                 dbConnection.query('INSERT INTO DAILY_INPUTS(work_date, ' + column + ') VALUES (?, ?)', [dbDate, value], function (error) {
-                    console.log(error);
-                    if (error) throw error;
+                    if (error){
+                        logger.log('DAILY_INPUT_TABLE - DATABASE ERROR updateInputTable(insert): ' + error.sqlMessage);
+                    }
                     dbConnection.end();
                     callback();
                 });
