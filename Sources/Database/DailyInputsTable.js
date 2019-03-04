@@ -27,7 +27,7 @@ class DailyInputsTable {
                 field: 'Daily Input',
                 pinned: 'left',
                 filter: 'agTextColumnFilter',
-                editable: editableTable,
+                editable: false,
                 sortable:false
             });
 

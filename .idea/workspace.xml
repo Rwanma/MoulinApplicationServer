@@ -2,19 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d64cbd9-f3ee-4972-954c-18fcdf363c1f" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/Sources/Logger/Logger.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sources/Config/Config.js" beforeDir="false" afterPath="$PROJECT_DIR$/Sources/Config/Config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sources/Config/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/Sources/Config/config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sources/Database/AnzSpendingTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/Sources/Database/AnzSpendingTable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/DailyRealData.js" beforeDir="false" afterPath="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/DailyRealData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/SpendingContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/SpendingContainer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Sources/Database/DailyInputsTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/Sources/Database/DailyInputsTable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sources/Database/EmployeeTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/Sources/Database/EmployeeTable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sources/Database/HoursTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/Sources/Database/HoursTable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sources/Database/LoginsTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/Sources/Database/LoginsTable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sources/Database/SpendingCategoriesTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/Sources/Database/SpendingCategoriesTable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,11 +17,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="545">
-              <caret line="219" column="37" lean-forward="true" selection-start-line="219" selection-start-column="37" selection-end-line="219" selection-end-column="37" />
+            <state relative-caret-position="547">
+              <caret line="219" column="37" selection-start-line="219" selection-start-column="37" selection-end-line="219" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SpendingContainer.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/SpendingContainer.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1843">
+              <caret line="97" lean-forward="true" selection-start-line="97" selection-end-line="97" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DailyRealData.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/DailyRealData.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1632">
+              <caret line="89" lean-forward="true" selection-start-line="89" selection-end-line="89" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DailyInputsTable.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Sources/Database/DailyInputsTable.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="263">
+              <caret line="29" column="31" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -38,7 +56,7 @@
       <file leaf-file-name="ExcelStream.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/ExcelStream.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="478">
+            <state relative-caret-position="1387">
               <caret line="73" column="4" selection-start-line="73" selection-start-column="4" selection-end-line="73" selection-end-column="4" />
             </state>
           </provider>
@@ -47,8 +65,8 @@
       <file leaf-file-name="SpendingCategoriesTable.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Sources/Database/SpendingCategoriesTable.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="45" column="25" lean-forward="true" selection-start-line="45" selection-start-column="25" selection-end-line="45" selection-end-column="25" />
+            <state relative-caret-position="855">
+              <caret line="45" column="25" selection-start-line="45" selection-start-column="25" selection-end-line="45" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -114,10 +132,8 @@
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/ExcelStream.js" />
         <option value="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/SpendingUnit.js" />
-        <option value="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/SpendingContainer.js" />
         <option value="$PROJECT_DIR$/Sources/Database/DatabaseConnection.js" />
         <option value="$PROJECT_DIR$/Sources/Database/Logins.js" />
-        <option value="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/DailyRealData.js" />
         <option value="$PROJECT_DIR$/Sources/Employees/Employees.js" />
         <option value="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/DataTransformer.js" />
         <option value="$PROJECT_DIR$/Sources/Config/Config.js" />
@@ -126,10 +142,12 @@
         <option value="$PROJECT_DIR$/Sources/Database/LoginsTable.js" />
         <option value="$PROJECT_DIR$/Sources/Database/HoursTable.js" />
         <option value="$PROJECT_DIR$/Sources/Database/EmployeeTable.js" />
-        <option value="$PROJECT_DIR$/Sources/Database/DailyInputsTable.js" />
         <option value="$PROJECT_DIR$/Sources/Database/AnzSpendingTable.js" />
         <option value="$PROJECT_DIR$/Sources/Database/SpendingCategoriesTable.js" />
         <option value="$PROJECT_DIR$/app.js" />
+        <option value="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/SpendingContainer.js" />
+        <option value="$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/DailyRealData.js" />
+        <option value="$PROJECT_DIR$/Sources/Database/DailyInputsTable.js" />
       </list>
     </option>
   </component>
@@ -168,14 +186,53 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="MoulinApplicationServer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MoulinApplicationServer" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MoulinApplicationServer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MoulinApplicationServer" type="462c0819:PsiDirectoryNode" />
+              <item name="Sources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MoulinApplicationServer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MoulinApplicationServer" type="462c0819:PsiDirectoryNode" />
+              <item name="Sources" type="462c0819:PsiDirectoryNode" />
+              <item name="AnzDataAnalysis" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MoulinApplicationServer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MoulinApplicationServer" type="462c0819:PsiDirectoryNode" />
+              <item name="Sources" type="462c0819:PsiDirectoryNode" />
+              <item name="AnzDataAnalysis" type="462c0819:PsiDirectoryNode" />
+              <item name="DataTransformer" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MoulinApplicationServer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MoulinApplicationServer" type="462c0819:PsiDirectoryNode" />
+              <item name="Sources" type="462c0819:PsiDirectoryNode" />
+              <item name="Database" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="AndroidView" />
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="javascript.nodejs.core.library.configured.version" value="11.0.0" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../React/MoulinApplicationClient" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../React/Client4Apr/MoulinApplicationClient" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -285,56 +342,56 @@
       <workItem from="1550830038420" duration="811000" />
       <workItem from="1551492070993" duration="11267000" />
       <workItem from="1551589893988" duration="3966000" />
+      <workItem from="1551693316721" duration="527000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="72060000" />
+    <option name="totallyTimeSpent" value="72587000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
+    <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="DB Execution Console" order="7" />
-      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
-      <window_info anchor="right" id="Maven Projects" order="8" />
-      <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
-      <window_info id="Capture Tool" order="8" />
-      <window_info id="Designer" order="2" />
-      <window_info anchor="right" id="Database" order="5" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info id="UI Designer" order="5" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39979014" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info id="DB Browser" order="4" />
       <window_info anchor="right" id="Palette&#9;" order="6" />
       <window_info id="Image Layers" order="3" />
+      <window_info anchor="bottom" id="DB Execution Console" order="7" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
+      <window_info anchor="right" id="Maven Projects" order="8" />
+      <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info id="npm" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.33053514" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.32948583" />
-      <window_info content_ui="combo" id="Project" order="0" weight="0.27086788" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.32948583" />
+      <window_info id="Capture Tool" order="8" />
+      <window_info id="Designer" order="2" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27086788" />
+      <window_info anchor="right" id="Database" order="5" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info id="UI Designer" order="5" />
       <window_info anchor="right" id="Theme Preview" order="7" />
       <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39979014" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="TypeScript" order="12" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
     <layout-to-restore>
       <window_info anchor="bottom" id="DB Execution Console" order="7" />
       <window_info id="Designer" order="2" />
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33053514" />
       <window_info id="Image Layers" order="3" />
       <window_info anchor="bottom" id="TypeScript" order="12" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33053514" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="DB Browser" order="4" />
@@ -343,13 +400,13 @@
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.32948583" />
       <window_info id="Capture Tool" order="8" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info id="npm" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="right" id="Maven Projects" order="8" />
-      <window_info anchor="bottom" id="Find" order="1" />
       <window_info content_ui="combo" id="Project" order="0" weight="0.27086788" />
       <window_info anchor="right" id="Database" order="5" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -358,6 +415,7 @@
       <window_info anchor="right" id="Theme Preview" order="7" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39979014" />
     </layout-to-restore>
   </component>
@@ -572,21 +630,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/SpendingContainer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="27" column="5" lean-forward="true" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Sources/Database/Logins.js" />
-    <entry file="file://$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/DailyRealData.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="23" column="16" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Sources/Employees/EmployeeHours.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1501">
@@ -629,13 +673,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/@types/node/fs.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="1686" column="13" selection-start-line="1686" selection-start-column="13" selection-end-line="1686" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@types/node/fs.d.ts" />
     <entry file="file://$PROJECT_DIR$/Sources/Logger/Logger.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
@@ -664,13 +702,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Sources/Database/DailyInputsTable.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="166" selection-start-line="166" selection-end-line="168" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Sources/Database/AnzSpendingTable.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="399">
@@ -687,22 +718,43 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Sources/Database/SpendingCategoriesTable.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="45" column="25" lean-forward="true" selection-start-line="45" selection-start-column="25" selection-end-line="45" selection-end-column="25" />
+        <state relative-caret-position="855">
+          <caret line="45" column="25" selection-start-line="45" selection-start-column="25" selection-end-line="45" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/ExcelStream.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="478">
+        <state relative-caret-position="1387">
           <caret line="73" column="4" selection-start-line="73" selection-start-column="4" selection-end-line="73" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="545">
-          <caret line="219" column="37" lean-forward="true" selection-start-line="219" selection-start-column="37" selection-end-line="219" selection-end-column="37" />
+        <state relative-caret-position="547">
+          <caret line="219" column="37" selection-start-line="219" selection-start-column="37" selection-end-line="219" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/SpendingContainer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1843">
+          <caret line="97" lean-forward="true" selection-start-line="97" selection-end-line="97" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sources/AnzDataAnalysis/DataTransformer/DailyRealData.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1632">
+          <caret line="89" lean-forward="true" selection-start-line="89" selection-end-line="89" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sources/Database/DailyInputsTable.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="29" column="31" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="31" />
         </state>
       </provider>
     </entry>
