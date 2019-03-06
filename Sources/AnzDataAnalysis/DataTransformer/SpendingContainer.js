@@ -39,13 +39,12 @@ class SpendingsContainer {
         columnTitleArray.push({ headerName: 'SpendingType', field: 'SpendingType', pinned: 'left', filter: 'agTextColumnFilter' });
         totalArray['SpendingType'] = 'TOTAL';
         averageTotalArray['SpendingType'] = 'AVERAGE';
-        let totalSumSpending = 0, numberOfElementsToAverage = 0;
+        let totalSumSpending = 0
         this.spendingMap.forEach(function (spendingsForOneDay, date) {
             let compareDate = Helper.transformDayMonthYearToDate(date);
             let dayTotal = 0;
 
             if (beginDate.getOfficialJavascriptDate() <= compareDate && compareDate <= endDate.getOfficialJavascriptDate()) {
-                numberOfElementsToAverage++;
                 columnTitleArray.splice(1, 0, { headerName: date, field: date, filter: 'agNumberColumnFilter' });
                 spendingsForOneDay.myArray.forEach(function (spendingUnit) {
                     let spendingAlreadyAdded = false;
@@ -74,6 +73,8 @@ class SpendingsContainer {
             }
         });
 
+        let dateArray = Helper.getDatesRangeArray(beginDate.getOfficialJavascriptDate(), endDate.getOfficialJavascriptDate());
+        let numberOfElementsToAverage = dateArray.length;
         let averagePerDaySpending = Math.round(totalSumSpending / numberOfElementsToAverage);
         allDates.forEach(function (date) {
             averageTotalArray[date] = averagePerDaySpending;
