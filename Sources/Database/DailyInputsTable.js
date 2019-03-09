@@ -52,6 +52,9 @@ class DailyInputsTable {
                 jsonObj.columns.push({
                     headerName: work_date, field: work_date, filter: 'agTextColumnFilter', editable: editableTable
                 });
+
+                rent[work_date] = priceConfig.rent;
+
                 results.forEach(function (result) {
                     if (result.work_date === work_date) {
                         cashRevenuArray[work_date] = result.cash_revenu;
@@ -60,10 +63,6 @@ class DailyInputsTable {
                         milkCartonArray[work_date] = result.milk_cartons;
                         soyMilkArray[work_date] = result.soy_cartons;
                         almondMilkArray[work_date] = result.almond_cartons;
-                        rent[work_date] = priceConfig.rent;
-
-
-
 
                         // Cash Revenu
                         totalRevenu[work_date] = 0;
@@ -78,9 +77,6 @@ class DailyInputsTable {
                         if (totalRevenu[work_date] === 0) {
                             totalRevenu[work_date] = undefined;
                         }
-
-
-
 
                         // Spending cost
                         totalMilkCoffeeSpending[work_date] = 0;
@@ -107,6 +103,7 @@ class DailyInputsTable {
                 });
 
             });
+            
             jsonObj.data.push(cashRevenuArray);
             jsonObj.data.push(ftposRevenuArray);
             jsonObj.data.push(coffeeBagsArray);

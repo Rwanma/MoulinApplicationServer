@@ -168,7 +168,6 @@ let server = app.listen(3005, function () {
     app.get("/GetEmployeeHoursTable", function (req, res) {
         logger.log('GET EMPLOYEE HOUR TABLE REQUEST: ' + req.originalUrl);
         let employeeHours = new EmployeeHours();
-        console.log('Employee Hours : ' + req.query.beginDate + ' ' + req.query.endDate);
         employeeHours.getHoursForEmployeesInJson(new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), function (employeeHoursJson) {
             res.status(200).send(employeeHoursJson);
         });
