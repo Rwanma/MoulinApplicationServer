@@ -1,21 +1,13 @@
-let Config = require('../Config/Config');
-
-
-
-
 
 
 class Logger {
     constructor(){
-        let logConfig=Config.getLoggerConfig();
-        const pino = require('pino');
-        this.logger = require('pino')( pino.destination('./moulinApp.log'));
+        this.logger = require('../../node_modules/logger').createLogger('./moulinApp.log'); // logs to a file
     }
 
     log(textToLog){
         this.logger.info(textToLog);
     }
-
 }
 
 
