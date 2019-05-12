@@ -1,32 +1,24 @@
 let DatabaseConnection = require('./DatabaseConnection.js');
 let Logger = require('../../Sources/Logger/Logger');
 let logger = new Logger();
+let SqlString = require('sqlstring');
 
 
 class LoginsTable {
-
-
     getLoginType(login, password, callback) {
         logger.log('LOGIN_TABLE - getLoginType');
-        let dbConnection = DatabaseConnection.getConnection();
-        dbConnection.query('select * from LOGINS WHERE login=?', [login], function (error, results) {
-            if (error){
-                logger.log('LOGIN_TABLE - DATABASE ERROR getLoginType: ' + error.sqlMessage);
-            }
-            dbConnection.end();
-
+        DatabaseConnection.query(SqlString.format('select * from LOGINS WHERE login=?', [login]), function (results) {
             let loginRole = '';
-            if(results[0] === undefined){
+            if (results == null || results[0] === undefined) {
                 loginRole = 'wrongPassword';
-            }else if(results[0].password === password){
+            } else if (results[0].password === password) {
                 loginRole = results[0].role;
-            }else{
+            } else {
                 loginRole = 'wrongPassword';
             }
             callback(loginRole);
         });
     }
-
 }
 
 module.exports = LoginsTable;

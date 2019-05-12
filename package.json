@@ -20,6 +20,7 @@
     "node-excel-stream": "^1.0.1",
     "node-gyp": "^3.8.0",
     "pino": "^5.11.1",
-    "pug": "2.0.0-beta11"
+    "pug": "2.0.0-beta11",
+    "sqlstring": "^2.3.1"
   }
 }
