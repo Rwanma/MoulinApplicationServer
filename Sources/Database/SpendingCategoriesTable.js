@@ -3,7 +3,7 @@ let ExcelReader = require('node-excel-stream').ExcelReader;
 const fs = require('fs');
 let Logger = require('../../Sources/Logger/Logger');
 let logger = new Logger();
-
+let SqlString = require('sqlstring');
 
 class SpendingCategoriesTable {
 
@@ -35,29 +35,32 @@ class SpendingCategoriesTable {
 
 
 
-    insertCategoryInDatabaseFromCsvFormat(file) {
-        let dbConnection = DatabaseConnection.getConnection();
+    insertCategoryInDatabaseFromCsvFormat(file, callback) {
+        let spendingCategoryThis = this;
         this.getCategoriesFromCsvToDatabase(file, function (categoryArray) {
-            dbConnection.query('delete from SPENDING_CATEGORIES', function () {
-                dbConnection.query('INSERT INTO SPENDING_CATEGORIES(categories) VALUES ?',
-                    [categoryArray], function (error) {
-                        if (error){
-                            logger.log('SPENDING_CATEGORY - DATABASE ERROR insertCategoryInDatabaseFromCsvFormat: ' + error.sqlMessage);
+            DatabaseConnection.query(SqlString.format('delete from SPENDING_CATEGORIES'), function (results) {
+                if (results === null) {
+                    logger.log('SPENDING_CATEGORY - DATABASE ERROR couldn\'t delete spending categories');
+                    callback(null);
+                } else {
+                    DatabaseConnection.query(SqlString.format('INSERT INTO SPENDING_CATEGORIES(categories) VALUES ?', [categoryArray]), function (results) {
+                        if (results === null) {
+                            logger.log('SPENDING_CATEGORY - DATABASE ERROR insertCategoryInDatabaseFromCsvFormat');
                         }
-                        dbConnection.end();
+                        spendingCategoryThis.getAllCategoriesFromDatabase(callback);
                     });
+                }
             });
         });
     }
 
+
     getAllCategoriesFromDatabase(callback) {
         logger.log('SPENDING_CATEGORY - getAllCategoriesFromDatabase');
-        let dbConnection = DatabaseConnection.getConnection();
-        dbConnection.query('select * from SPENDING_CATEGORIES', function (error, results) {
-            if (error){
-                logger.log('SPENDING_CATEGORY - DATABASE ERROR getAllCategoriesFromDatabase: ' + error.sqlMessage);
+        DatabaseConnection.query(SqlString.format('select * from SPENDING_CATEGORIES'), function (results) {
+            if (results === null) {
+                logger.log('SPENDING_CATEGORY - DATABASE ERROR getAllCategoriesFromDatabase');
             }
-            dbConnection.end();
             callback(results);
         });
     }
@@ -66,15 +69,12 @@ class SpendingCategoriesTable {
     addCategory(category, callback) {
         logger.log('SPENDING_CATEGORY - addCategory: ' + category);
         let spendingCategoryThis = this;
-        let dbConnection = DatabaseConnection.getConnection();
-        dbConnection.query(
-            'INSERT INTO SPENDING_CATEGORIES(categories) VALUES (?)', [category], function (error) {
-                if (error){
-                    logger.log('SPENDING_CATEGORY - DATABASE ERROR addCategory: ' + error.sqlMessage);
-                }
-                dbConnection.end();
-                spendingCategoryThis.getAllCategoriesFromDatabase(callback);
-            });
+        DatabaseConnection.query(SqlString.format('INSERT INTO SPENDING_CATEGORIES(categories) VALUES (?)', [category]), function (results) {
+            if (results === null) {
+                logger.log('SPENDING_CATEGORY - DATABASE ERROR addCategory');
+            }
+            spendingCategoryThis.getAllCategoriesFromDatabase(callback);
+        });
     }
 
 
@@ -82,12 +82,10 @@ class SpendingCategoriesTable {
     deleteCategory(category, callback) {
         logger.log('SPENDING_CATEGORY - deleteCategory: ' + category);
         let spendingCategoryThis = this;
-        let dbConnection = DatabaseConnection.getConnection();
-        dbConnection.query('DELETE FROM SPENDING_CATEGORIES WHERE categories=?', [category], function (error) {
-            if (error){
-                logger.log('SPENDING_CATEGORY - DATABASE ERROR deleteCategory: ' + error.sqlMessage);
+        DatabaseConnection.query(SqlString.format('DELETE FROM SPENDING_CATEGORIES WHERE categories=?', [category]), function (results) {
+            if (results === null) {
+                logger.log('SPENDING_CATEGORY - DATABASE ERROR deleteCategory');
             }
-            dbConnection.end();
             spendingCategoryThis.getAllCategoriesFromDatabase(callback);
         });
     }
@@ -98,8 +96,6 @@ module.exports = SpendingCategoriesTable;
 
 /*
 spendingCategoriesTable = new SpendingCategoriesTable();
-
-
 
 //spendingCategoriesTable.insertCategoryInDatabaseFromCsvFormat();
 spendingCategoriesTable.getAllCategoriesFromDatabase(function () {

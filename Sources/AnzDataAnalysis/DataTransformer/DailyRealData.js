@@ -1,7 +1,6 @@
 let DataTransformer = require("../../AnzDataAnalysis/DataTransformer/DataTransformer.js");
 let EmployeeHours = require("../../Employees/EmployeeHours");
 let Helper = require('../../Helpers/Helpers.js');
-let DailyInputsTable = require('../../Database/DailyInputsTable');
 
 
 class DailyRealData {

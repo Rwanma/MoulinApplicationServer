@@ -4,6 +4,7 @@ const fs = require('fs');
 let Helper = require('../Helpers/Helpers.js');
 let Logger = require('../../Sources/Logger/Logger');
 let logger = new Logger();
+let SqlString = require('sqlstring');
 
 
 class AnzSpendingTable {
@@ -41,31 +42,31 @@ class AnzSpendingTable {
     };
 
 
-    insertAllAnzSpendings(file) {
+    insertAllAnzSpendings(file, callback) {
         logger.log('ANZ_SPENDING_TABLE - insertAllAnzSpendings');
         this.getAnzDataFromCsvToDatabase(file, function (anzSpendingArray) {
-            let dbConnection = DatabaseConnection.getConnection();
-            dbConnection.query('delete from ANZ_SPENDING', function () {
-                dbConnection.query('INSERT INTO ANZ_SPENDING(spending_date,  amount, spending_description ) VALUES ?',
-                    [anzSpendingArray], function (error) {
-                        if (error){
-                            logger.log('ANZ_SPENDING_TABLE - DATABASE ERROR insertAllAnzSpendings: ' + error.sqlMessage);
+            DatabaseConnection.query(SqlString.format('delete from ANZ_SPENDING'), function (sucessfullDelete) {
+                if (sucessfullDelete === null) {
+                    callback('error in deleting ANZ data in database, check the logs')
+                } else {
+                    DatabaseConnection.query(SqlString.format('INSERT INTO ANZ_SPENDING(spending_date,  amount, spending_description ) VALUES ?', [anzSpendingArray]), function (results) {
+                        let returnValue = 'successfully saved ANZ data';
+                        if (results === null) {
+                            returnValue = 'error in deleting ANZ data in database, check the logs';
+                        } else {
+                            returnValue = 'successfully inserted ANZ data in the database';
                         }
+                        callback(returnValue);
                     });
+                }
             });
         });
-
     }
 
 
     getAllAnzSpendingFromTable(callback) {
         logger.log('ANZ_SPENDING_TABLE - getAllAnzSpendingFromTable');
-        let dbConnection = DatabaseConnection.getConnection();
-        dbConnection.query('select DATE_FORMAT(spending_date,\'%d/%m/%Y\') as spending_date, amount, spending_description from ANZ_SPENDING', function (error, results) {
-            if (error){
-                logger.log('ANZ_SPENDING_TABLE - DATABASE ERROR getAllAnzSpendingFromTable: ' + error.sqlMessage);
-            }
-            dbConnection.end();
+        DatabaseConnection.query(SqlString.format('select DATE_FORMAT(spending_date,\'%d/%m/%Y\') as spending_date, amount, spending_description from ANZ_SPENDING'), function (results) {
             callback(results);
         });
     }
