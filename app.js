@@ -12,6 +12,7 @@ let DailyInputDataTable = require('./Sources/Database/DailyInputDataTable');
 let DailyRealData = require('./Sources/AnzDataAnalysis/DataTransformer/DailyRealData');
 let LoginsTable = require('./Sources/Database/LoginsTable');
 let Logger = require('./Sources/Logger/Logger');
+let Config = require('./Sources/Config/Config');
 let logger = new Logger();
 
 let app = express();
@@ -46,7 +47,7 @@ let server = app.listen(3005, function () {
         logger.log('UPLOAD ANZ DATA REQUEST: ' + req.originalUrl);
         res.status(200).send('');
         let form = new IncomingForm();
-        form.uploadDir = 'Sources/AnzDataAnalysis/CsvFiles';
+        form.uploadDir =  Config.getCsvDirectory();
         form.parse(req, function (err, fields, files) {
             if (err) {
                 logger.log('ERROR in uploadAnzCsv: ' + err);
@@ -67,7 +68,7 @@ let server = app.listen(3005, function () {
     app.post('/uploadConfigurationCategory', function (req, res) {
         logger.log('UPLOAD CONFIGURATION REQUEST: ' + req.originalUrl);
         let form = new IncomingForm();
-        form.uploadDir = 'Sources/AnzDataAnalysis/CsvFiles';
+        form.uploadDir =  Config.getCsvDirectory();
         form.parse(req, function (err, fields, files) {
             if (err) {
                 logger.log('ERROR in uploadConfigurationCategory: ' + err);

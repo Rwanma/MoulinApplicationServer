@@ -15,4 +15,8 @@
   "logs": {
     "directory": "./logs"
   }
+,
+  "csv_files": {
+    "directory": "/var/tmp"
+  }
 }

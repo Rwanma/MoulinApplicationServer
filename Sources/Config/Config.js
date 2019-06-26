@@ -16,6 +16,11 @@ class Config {
         const config = require('./config.json');
         return(config.logs);
     }
+
+    static getCsvDirectory() {
+        const config = require('./config.json');
+        return(config.csv_files.directory);
+    }
 }
 
 module.exports = Config;
