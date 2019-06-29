@@ -1,5 +1,6 @@
 let DataTransformer = require("../../AnzDataAnalysis/DataTransformer/DataTransformer.js");
 let EmployeeHours = require("../../Employees/EmployeeHours");
+let DailyInputDataTable = require("../../Database/DailyInputDataTable");
 let Helper = require('../../Helpers/Helpers.js');
 
 
@@ -11,12 +12,12 @@ class DailyRealData {
         let dateArray = Helper.getDatesRangeArray(beginDate.getOfficialJavascriptDate(), endDate.getOfficialJavascriptDate());
         let dataTransformerWithDates = new DataTransformer();
         let employeeHours = new EmployeeHours();
-        let dailyInputsTable = new DailyInputsTable();
+        let dailyInputsTable = new DailyInputDataTable();
 
         dataTransformerWithDates.constructDataInMapFormat('false', function (mySpendingWithDates) {
             mySpendingWithDates.transformToAgGridData(beginDate, endDate, function (anzSpending) {
                 employeeHours.getHoursForEmployeesInJson(beginDate, endDate, function (employeeHours) {
-                    dailyInputsTable.getDailyInputsInJson(beginDate, endDate, 'true', function (dailyInputs) {
+                    dailyInputsTable.getDailyInputDataInJson(beginDate, endDate, 'true', function (dailyInputs) {
 
                         jsonDailyRealData.columns[0] = { headerName: 'Category', field: 'Category', pinned: 'left', filter: 'agTextColumnFilter', editable: false };
 

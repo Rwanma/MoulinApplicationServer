@@ -40,41 +40,43 @@ class DailyInputDataTable {
                 totalDayEstimate[work_date] = 0;
                 rent[work_date] = priceConfig.rent;
 
-                results.forEach(function (result) {
-                    if (result.work_date === work_date) {
+                if (results!==null) {
+                    results.forEach(function (result) {
+                        if (result.work_date === work_date) {
 
-                        switch (result.input_type) {
-                            case 'cash_revenu':
-                                cashRevenuArray[work_date] = result.value;
-                                totalRevenu[work_date] += (parseInt(result.value, 10));
-                                break;
-                            case 'ftpos_revenu':
-                                ftposRevenuArray[work_date] = result.value;
-                                totalRevenu[work_date] += (parseInt(result.value, 10));
-                                break;
-                            case 'coffee_bags':
-                                coffeeBagsArray[work_date] = result.value;
-                                totalMilkCoffeeSpending[work_date] += (parseInt(result.value, 10) * priceConfig.coffee);
+                            switch (result.input_type) {
+                                case 'cash_revenu':
+                                    cashRevenuArray[work_date] = result.value;
+                                    totalRevenu[work_date] += (parseInt(result.value, 10));
+                                    break;
+                                case 'ftpos_revenu':
+                                    ftposRevenuArray[work_date] = result.value;
+                                    totalRevenu[work_date] += (parseInt(result.value, 10));
+                                    break;
+                                case 'coffee_bags':
+                                    coffeeBagsArray[work_date] = result.value;
+                                    totalMilkCoffeeSpending[work_date] += (parseInt(result.value, 10) * priceConfig.coffee);
 
-                                break;
-                            case 'milk_cartons':
-                                milkCartonArray[work_date] = result.value;
-                                totalMilkCoffeeSpending[work_date] += (parseInt(result.value, 10) * priceConfig.normalMilk);
+                                    break;
+                                case 'milk_cartons':
+                                    milkCartonArray[work_date] = result.value;
+                                    totalMilkCoffeeSpending[work_date] += (parseInt(result.value, 10) * priceConfig.normalMilk);
 
-                                break;
-                            case 'soy_cartons':
-                                soyMilkArray[work_date] = result.value;
-                                totalMilkCoffeeSpending[work_date] += (parseInt(result.value, 10) * priceConfig.soyMilk);
-                                break;
-                            case 'almond_cartons':
-                                almondMilkArray[work_date] = result.value;
-                                totalMilkCoffeeSpending[work_date] += (parseInt(result.value, 10) * priceConfig.almondMilk);
-                                break;
-                            default:
-                                logger.log('ERROR IN DAILY_INPUT_DATA table we entered an input type that should not be there');
+                                    break;
+                                case 'soy_cartons':
+                                    soyMilkArray[work_date] = result.value;
+                                    totalMilkCoffeeSpending[work_date] += (parseInt(result.value, 10) * priceConfig.soyMilk);
+                                    break;
+                                case 'almond_cartons':
+                                    almondMilkArray[work_date] = result.value;
+                                    totalMilkCoffeeSpending[work_date] += (parseInt(result.value, 10) * priceConfig.almondMilk);
+                                    break;
+                                default:
+                                    logger.log('ERROR IN DAILY_INPUT_DATA table we entered an input type that should not be there');
+                            }
                         }
-                    }
-                });
+                    });
+                }
                 totalDayEstimate[work_date] = totalRevenu[work_date] - totalMilkCoffeeSpending[work_date];
             });
 
