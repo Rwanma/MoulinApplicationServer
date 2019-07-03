@@ -52,7 +52,7 @@ class EmployeeData {
         let employeeThis = this;
         employeeDatabase.getAllDatabaseEmployees(function (databaseEmployees) {
             databaseEmployees.map((employees) => {
-                let employee = new Employee(employees.employee_id, employees.first_name, employees.last_name, employees.salary_cash, employees.salary_transfer);
+                let employee = new Employee(employees.employee_id, employees.first_name, employees.last_name, employees.salary_transfer, employees.salary_cash);
                 promises.push(new Promise((resolve) => {
                     hoursTable.getDatabaseHoursForEmployee(employee.id, function (hours) {
                         hours.map((hours) => {
