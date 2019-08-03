@@ -76,7 +76,7 @@ class SpendingsContainer {
         let dateArray = Helper.getDatesRangeArray(beginDate.getOfficialJavascriptDate(), endDate.getOfficialJavascriptDate());
         let numberOfElementsToAverage = dateArray.length;
         let averagePerDaySpending = Math.round(totalSumSpending / numberOfElementsToAverage);
-        allDates.forEach(function (date) {
+        dateArray.forEach(function (date) {
             averageTotalArray[date] = averagePerDaySpending;
         });
 
