@@ -47,11 +47,11 @@ class DailyInputDataTable {
                             switch (result.input_type) {
                                 case 'cash_revenu':
                                     cashRevenuArray[work_date] = result.value;
-                                    totalRevenu[work_date] += (parseInt(result.value, 10));
+                                    totalRevenu[work_date] += (result.value);
                                     break;
                                 case 'ftpos_revenu':
                                     ftposRevenuArray[work_date] = result.value;
-                                    totalRevenu[work_date] += (parseInt(result.value, 10));
+                                    totalRevenu[work_date] += (result.value);
                                     break;
                                 case 'coffee_bags':
                                     coffeeBagsArray[work_date] = result.value;
@@ -77,7 +77,7 @@ class DailyInputDataTable {
                         }
                     });
                 }
-                totalDayEstimate[work_date] = totalRevenu[work_date] - totalMilkCoffeeSpending[work_date];
+                totalDayEstimate[work_date] = parseInt(totalRevenu[work_date] - totalMilkCoffeeSpending[work_date], 10);
             });
 
             jsonObj.data.push(cashRevenuArray);
