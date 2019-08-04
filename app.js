@@ -206,7 +206,7 @@ let server = app.listen(3005, function () {
         logger.log('UPDATE DAILY INPUT REQUEST: ' + req.originalUrl);
 
         let dailyInputsTable = new DailyInputDataTable();
-        dailyInputsTable.updateInputDataTable(new Helper.MyDateClass(req.query.workDate), req.query.typeChanged, parseInt(req.query.newValue, 10), function () {
+        dailyInputsTable.updateInputDataTable(new Helper.MyDateClass(req.query.workDate), req.query.typeChanged, req.query.newValue, function () {
             dailyInputsTable.getDailyInputDataInJson(new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), 'true', function (dailyInputJson) {
                 res.status(200).send(dailyInputJson);
             });
