@@ -39,8 +39,7 @@ ALTER TABLE EMPLOYEES MODIFY salary_cash DOUBLE;
 ALTER TABLE EMPLOYEE_HOURS MODIFY hours DOUBLE;
 ALTER TABLE ANZ_SPENDING MODIFY amount DOUBLE;
 ALTER TABLE DAILY_INPUT_DATA MODIFY value DOUBLE;
-
-
+ALTER TABLE SPENDING_CATEGORIES ADD spending_type VARCHAR(255);
 
 -- *********************************************************************************************************************************
 
