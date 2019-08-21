@@ -7,7 +7,8 @@ let EmployeeTable = require('./Sources/Database/EmployeeTable');
 let HoursTable = require('./Sources/Database/HoursTable');
 let IncomingForm = require('formidable').IncomingForm;
 let AnzSpendingTable = require('./Sources/Database/AnzSpendingTable');
-let SpendingCategoriesTable = require('./Sources/Database/SpendingCategoriesTable');
+let AnzFilterTable = require('./Sources/Database/AnzFilterTable');
+let CategoriesTable = require('./Sources/Database/CategoriesTable');
 let DailyInputDataTable = require('./Sources/Database/DailyInputDataTable');
 let DailyRealData = require('./Sources/AnzDataAnalysis/DataTransformer/DailyRealData');
 let LoginsTable = require('./Sources/Database/LoginsTable');
@@ -47,7 +48,7 @@ let server = app.listen(3005, function () {
         logger.log('UPLOAD ANZ DATA REQUEST: ' + req.originalUrl);
         res.status(200).send('');
         let form = new IncomingForm();
-        form.uploadDir =  Config.getCsvDirectory();
+        form.uploadDir = Config.getCsvDirectory();
         form.parse(req, function (err, fields, files) {
             if (err) {
                 logger.log('ERROR in uploadAnzCsv: ' + err);
@@ -64,52 +65,92 @@ let server = app.listen(3005, function () {
 
 
     // ***************************************************************************************************************************************
-    //ANZ CONFIGURATION
-    app.post('/uploadConfigurationCategory', function (req, res) {
+    //ANZ FILTER
+    app.get("/GetAllConfigData", function (req, res) {
+        logger.log('GET ANZ CONFIGURATION REQUEST: ' + req.originalUrl);
+        let filterTable = new AnzFilterTable();
+        filterTable.getConfigGridData(function (JsonData) {
+            res.status(200).send(JsonData);
+        });
+
+    });
+
+    app.post('/uploadFilters', function (req, res) {
         logger.log('UPLOAD CONFIGURATION REQUEST: ' + req.originalUrl);
         let form = new IncomingForm();
-        form.uploadDir =  Config.getCsvDirectory();
+        form.uploadDir = Config.getCsvDirectory();
         form.parse(req, function (err, fields, files) {
             if (err) {
-                logger.log('ERROR in uploadConfigurationCategory: ' + err);
+                logger.log('ERROR in uploadFilters: ' + err);
             } else {
-                let spendingCategoriesTable = new SpendingCategoriesTable();
-                spendingCategoriesTable.insertCategoryInDatabaseFromCsvFormat(files.filepond.path, function (JsonData) {
+                let filterTable = new AnzFilterTable();
+                filterTable.insertFilterInDatabaseFromCsvFormat(files.filepond.path, function (JsonData) {
                     res.status(200).send(JsonData);
                 });
             }
         });
     });
 
-    app.get("/GetAnzConfiguration", function (req, res) {
-        logger.log('GET ANZ CONFIGURATION REQUEST: ' + req.originalUrl);
-        let spendingCategoriesTable = new SpendingCategoriesTable();
-        spendingCategoriesTable.getAllCategoriesFromDatabase(function (JsonData) {
-            res.status(200).send(JsonData);
-        });
-
-    });
-
-    app.get("/AddAnzConfiguration", function (req, res) {
-        logger.log('ADD ANZ CONFIGURATION REQUEST: ' + req.originalUrl);
-        let spendingCategoriesTable = new SpendingCategoriesTable();
-        spendingCategoriesTable.addCategory(req.query.category, function () {
-            spendingCategoriesTable.getAllCategoriesFromDatabase(function (JsonData) {
+    app.get("/AddFilter", function (req, res) {
+        logger.log('ADD FILTER REQUEST: ' + req.originalUrl);
+        let filterTable = new AnzFilterTable();
+        filterTable.addFilter(req.query.filter, function () {
+            filterTable.getConfigGridData(function (JsonData) {
                 res.status(200).send(JsonData);
             });
         });
     });
 
-    app.get("/DeleteAnzConfiguration", function (req, res) {
-        logger.log('DELETE ANZ CONFIGURATION REQUEST: ' + req.originalUrl);
-        let spendingCategoriesTable = new SpendingCategoriesTable();
-        spendingCategoriesTable.deleteCategory(req.query.category, function () {
-            spendingCategoriesTable.getAllCategoriesFromDatabase(function (JsonData) {
+    app.get("/DeleteFilter", function (req, res) {
+        logger.log('DELETE FILTER REQUEST: ' + req.originalUrl);
+        let filterTable = new AnzFilterTable();
+        filterTable.deleteFilter(req.query.filter, function () {
+            filterTable.getConfigGridData(function (JsonData) {
                 res.status(200).send(JsonData);
             });
         });
     });
     // ***************************************************************************************************************************************
+
+    // ***************************************************************************************************************************************
+    // CATEGORIES
+    app.get("/getAllCategoriesForGridComboBox", function (req, res) {
+        logger.log('GET CATEGORIES REQUEST: ' + req.originalUrl);
+        let categoriesTable = new CategoriesTable();
+        categoriesTable.getAllCategoriesForGridComboBox(function (JsonData) {
+            res.status(200).send(JsonData);
+        });
+    });
+
+
+    app.get("/AddCategory", function (req, res) {
+        logger.log('ADD CATEGORY REQUEST: ' + req.originalUrl);
+        let filterTable = new AnzFilterTable();
+        let categoriesTable = new CategoriesTable();
+        categoriesTable.addCategory(req.query.category, function () {
+            filterTable.getConfigGridData(function (JsonData) {
+                res.status(200).send(JsonData);
+            });
+        });
+    });
+
+    app.get("/deletecategory", function (req, res) {
+        logger.log('DELETE CATEGORIES REQUEST: ' + req.originalUrl);
+        let categoriesTable = new CategoriesTable();
+        let filterTable = new AnzFilterTable();
+        categoriesTable.deleteCategory(req.query.category, function () {
+            filterTable.getConfigGridData(function (JsonData) {
+                res.status(200).send(JsonData);
+            });
+        });
+    });
+
+
+    // ***************************************************************************************************************************************
+
+
+
+
 
     // ***************************************************************************************************************************************
     // DAILY REAL DATA
