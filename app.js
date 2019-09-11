@@ -33,11 +33,22 @@ let server = app.listen(3005, function () {
 
     // ***************************************************************************************************************************************
     //ANZ DATA
-    app.get("/getAnzSpending", function (req, res) {
+    app.get("/getGridSpending", function (req, res) {
         logger.log('GET ANZ DATA REQUEST: ' + req.originalUrl);
         let dataTransformerWithDates = new DataTransormer();
         dataTransformerWithDates.constructDataInMapFormat(req.query.useFilter, function (mySpendingWithDates) {
-            mySpendingWithDates.transformToAgGridData(new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), function (JsonData) {
+            mySpendingWithDates.transformToGridData(req.query.groupByCategory, new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), function (JsonData) {
+                res.status(200).send(JsonData);
+            });
+        });
+    });
+
+
+    app.get("/getAnzSpendingInjQGridFormat", function (req, res) {
+        logger.log('GET ANZ DATA FOR JQ GRID REQUEST: ' + req.originalUrl);
+        let dataTransformerWithDates = new DataTransormer();
+        dataTransformerWithDates.constructDataInMapFormat(req.query.useFilter, function (mySpendingWithDates) {
+            mySpendingWithDates.transformToJQGridData(new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), function (JsonData) {
                 res.status(200).send(JsonData);
             });
         });
@@ -150,18 +161,18 @@ let server = app.listen(3005, function () {
 
 
 
-
-
     // ***************************************************************************************************************************************
     // DAILY REAL DATA
     app.get("/getFinancialDailyData", function (req, res) {
         logger.log('GET FINANCIAL DATA REQUEST: ' + req.originalUrl);
         let dailyRealData = new DailyRealData();
+        let dataTransformerWithDates = new DataTransormer();
         dailyRealData.getDailyData(new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), function (JsonData) {
-            res.status(200).send(JsonData);
+            dataTransformerWithDates.getTotalData(JsonData, new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), function (JsonDataWithTotals) {
+                res.status(200).send(JsonDataWithTotals);
+            });
         });
     });
-
     //************************************************************************************************************************************
 
     // ***************************************************************************************************************************************
@@ -245,7 +256,6 @@ let server = app.listen(3005, function () {
 
     app.get("/UpdateDailyInputs", function (req, res) {
         logger.log('UPDATE DAILY INPUT REQUEST: ' + req.originalUrl);
-
         let dailyInputsTable = new DailyInputDataTable();
         dailyInputsTable.updateInputDataTable(new Helper.MyDateClass(req.query.workDate), req.query.typeChanged, req.query.newValue, function () {
             dailyInputsTable.getDailyInputDataInJson(new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), 'true', function (dailyInputJson) {
@@ -253,8 +263,6 @@ let server = app.listen(3005, function () {
             });
         });
     });
-
-
     // ***************************************************************************************************************************************
 
 

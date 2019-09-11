@@ -29,46 +29,85 @@ class SpendingsContainer {
     }
 
 
-    transformToAgGridData(beginDate, endDate, callback) {
+    transformToJQGridData(beginDate, endDate, callback) {
         let dataSpending = [];
         let jsonObj = {
-            columns: {}, data: [], totalAnzSpending: [], averageTotal: []
+            columns: [], data: [], totalAnzSpending: [], averageTotal: []
         };
 
         let columnTitleArray = [], totalArray = {}, averageTotalArray = {}, allDates = [];
-        columnTitleArray.push({ headerName: 'SpendingType', field: 'SpendingType', pinned: 'left', filter: 'agTextColumnFilter' });
+        columnTitleArray.push({ text: 'Spending Type', datafield: 'SpendingType', width: 300});
+        this.spendingMap.forEach(function (spendingsForOneDay, date) {
+            columnTitleArray.splice(1, 0, { text: date, datafield: date, width: 100 });
+
+
+
+        });
+
+        jsonObj.columns = columnTitleArray;
+
+        return callback(jsonObj);
+    }
+
+
+
+    transformToGridData(groupByCategory, beginDate, endDate, callback) {
+        let dataSpending = [];
+        let jsonObj = { agGridColumns: {}, agGridData: [], totalAnzSpending: [], averageTotal: [], jqGridColumns : [] , jqGridSource : {} };
+        let columnAgGridTitleArray = [], columnJqGridTitleArray = [], totalArray = {}, averageTotalArray = {}, allDates = [];
+        let totalSumSpending = 0;
+
         totalArray['SpendingType'] = 'TOTAL';
+        totalArray['Category'] = '';
+        totalArray['DateRangeTotal'] = 0;
         averageTotalArray['SpendingType'] = 'AVERAGE';
-        let totalSumSpending = 0
+        averageTotalArray['Category'] = '';
+        averageTotalArray['DateRangeTotal'] = '';
+
+        columnAgGridTitleArray.push({ headerName: 'SpendingType', field: 'SpendingType', pinned: 'left', filter: 'agTextColumnFilter' });
+        columnJqGridTitleArray.push({ text: 'Category', datafield: 'Category', width: 150});
+        columnJqGridTitleArray.push({ text: 'Spending Type', datafield: 'SpendingType', width: 150});
+        columnJqGridTitleArray.push({ text: 'Date Range Total', datafield: 'DateRangeTotal', aggregates: ['sum'], width: 120});
+
+
         this.spendingMap.forEach(function (spendingsForOneDay, date) {
             let compareDate = Helper.transformDayMonthYearToDate(date);
             let dayTotal = 0;
 
             if (beginDate.getOfficialJavascriptDate() <= compareDate && compareDate <= endDate.getOfficialJavascriptDate()) {
-                columnTitleArray.splice(1, 0, { headerName: date, field: date, filter: 'agNumberColumnFilter' });
+                columnAgGridTitleArray.splice(1, 0, { headerName: date, field: date, filter: 'agNumberColumnFilter' });
+                columnJqGridTitleArray.splice(3, 0, { text: date, datafield: date, aggregates: ['sum'], width: 100 });
+
                 spendingsForOneDay.myArray.forEach(function (spendingUnit) {
                     let spendingAlreadyAdded = false;
 
                     for (let i in dataSpending) {
                         if (dataSpending[i]['SpendingType'] === spendingUnit.description) {
                             dataSpending[i][date] = spendingUnit.description;
-                            dataSpending[i][date] = spendingUnit.amount;
+                            dataSpending[i][date] = (Math.round(spendingUnit.amount * 100) / 100);
+                            dataSpending[i]['DateRangeTotal'] += spendingUnit.amount;
+                            dataSpending[i]['DateRangeTotal'] = (Math.round(dataSpending[i]['DateRangeTotal'] * 100) / 100);
                             spendingAlreadyAdded = true;
                         }
                     }
 
                     if (!spendingAlreadyAdded) {
                         let newSpendingTypeArray = {};
+                        newSpendingTypeArray['Category'] = spendingUnit.category;
                         newSpendingTypeArray['SpendingType'] = spendingUnit.description;
-                        newSpendingTypeArray[date] = spendingUnit.amount;
+                        newSpendingTypeArray['DateRangeTotal'] = (Math.round(spendingUnit.amount * 100) / 100);
+                        newSpendingTypeArray[date] = (Math.round(spendingUnit.amount * 100) / 100);
+
                         dataSpending.push(newSpendingTypeArray);
                     }
 
+                    dayTotal += (Math.round(spendingUnit.amount * 100) / 100);
+                    totalSumSpending += (Math.round(spendingUnit.amount * 100) / 100);
+                }); //spendingsForOneDay forEach
 
-                    dayTotal += spendingUnit.amount;
-                    totalSumSpending += spendingUnit.amount;
-                });
+
                 totalArray[date] = dayTotal;
+                totalArray['DateRangeTotal'] += dayTotal;
                 allDates.push(date);
             }
         });
@@ -76,19 +115,23 @@ class SpendingsContainer {
         let dateArray = Helper.getDatesRangeArray(beginDate.getOfficialJavascriptDate(), endDate.getOfficialJavascriptDate());
         let numberOfElementsToAverage = dateArray.length;
         let averagePerDaySpending = Math.round(totalSumSpending / numberOfElementsToAverage);
+
         dateArray.forEach(function (date) {
             averageTotalArray[date] = averagePerDaySpending;
         });
 
-        jsonObj.columns = columnTitleArray;
-        jsonObj.data.push(totalArray);
-        jsonObj.data.push(averageTotalArray);
-        jsonObj.data.push([]);
+        if (groupByCategory === 'false') {
+            jsonObj.agGridData.push(totalArray);
+            jsonObj.agGridData.push(averageTotalArray);
+            jsonObj.agGridData.push([]);
+        }
+        jsonObj.agGridColumns = columnAgGridTitleArray;
+        jsonObj.jqGridColumns = columnJqGridTitleArray;
         jsonObj.totalAnzSpending.push(totalArray);
         jsonObj.averageTotal.push(averageTotalArray);
 
         dataSpending.forEach(function (spending) {
-            jsonObj.data.push(spending);
+            jsonObj.agGridData.push(spending);
         });
 
         return callback(jsonObj);
