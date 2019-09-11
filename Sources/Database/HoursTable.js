@@ -33,7 +33,6 @@ class HoursTable {
         logger.log('HOURS_TABLE - updateHours');
         let date = work_date.getDateInDatabaseFormat();
 
-
         let sqlQuery = '';
         if (hours === 0) {
             sqlQuery = SqlString.format('DELETE FROM EMPLOYEE_HOURS WHERE  employee_id=? AND  payment_type=? AND work_date = ? ', [employee_id, payment_type, date]);
@@ -51,12 +50,34 @@ class HoursTable {
         });
     }
 
+    getEmployeeTotalInJson(jsonObj, beginDate, endDate, paymentType, callback) {
+        logger.log('HOURS_TABLE - setEmployeeTotalInJson');
+        let sqlQuery = SqlString.format('SELECT ROUND(SUM(H.hours * E.salary_' + paymentType +'),2) AS \'total\' FROM EMPLOYEE_HOURS H, EMPLOYEES E WHERE H.employee_id = E.employee_id AND H.work_date >= ? AND H.work_date <= ? AND H.payment_type = ?',
+            [beginDate, endDate, paymentType]);
 
-
+        DatabaseConnection.query(sqlQuery, function (results) {
+            if (results === null) {
+                logger.log('HOURS_TABLE - DATABASE ERROR setEmployeeTotalInJson');
+            } else {
+                paymentType === 'cash' ? jsonObj.employeeCashTotal = results[0].total : jsonObj.employeeTransferTotal = results[0].total;
+            }
+            callback();
+        });
+    }
 }
 
 
 module.exports = HoursTable;
+
+
+/*
+let hoursTable = new HoursTable();
+
+hoursTable.getEmployeeTotalInJson(jsonObj, '2019-08-01', '2019-08-30', 'cash', function (results) {
+  console.log(results.employeeCashTotal);
+});
+*/
+
 
 /*let hoursTable = new HoursTable();
 hoursTable.updateHours(1,'cash', '2019-01-01', 108, function (results) {

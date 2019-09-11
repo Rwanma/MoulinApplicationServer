@@ -1,6 +1,7 @@
 
 class SpendingUnit {
-    constructor(descriptionInExcel, amountSpent, date) {
+    constructor(category, descriptionInExcel, amountSpent, date) {
+        this.category = category;
         this.description = descriptionInExcel;
         this.amount = amountSpent;
         this.date = date;

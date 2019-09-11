@@ -66,14 +66,36 @@ class AnzSpendingTable {
 
     getAllAnzSpendingFromTable(callback) {
         logger.log('ANZ_SPENDING_TABLE - getAllAnzSpendingFromTable');
-        DatabaseConnection.query(SqlString.format('select DATE_FORMAT(spending_date,\'%d/%m/%Y\') as spending_date, amount, spending_description from ANZ_SPENDING'), function (results) {
+        DatabaseConnection.query(SqlString.format('select DATE_FORMAT(spending_date,\'%d/%m/%Y\') AS spending_date, amount, spending_description from ANZ_SPENDING'), function (results) {
             callback(results);
+        });
+    }
+
+
+    getAnzSpendingTotalInJson(jsonObj, beginDate, endDate, callback) {
+        logger.log('ANZ_SPENDING_TABLE - getAnzSpendingTotalInJson');
+        let sqlQuery = SqlString.format('SELECT ROUND(SUM(amount),2) AS  \'total\' FROM ANZ_SPENDING  WHERE amount < 0 AND spending_date >= \'2019-06-02\' AND spending_date <= \'2019-06-03\';',
+            [beginDate, endDate]);
+
+        DatabaseConnection.query(sqlQuery, function (results) {
+            if (results === null) {
+                logger.log('ANZ_SPENDING_TABLE - DATABASE getAnzSpendingTotalInJson');
+            } else {
+                jsonObj.totalAnzSpending = results[0].total;
+            }
+            callback();
         });
     }
 
 }
 
 module.exports = AnzSpendingTable;
+
+/*let anzSpendingTable = new AnzSpendingTable();
+let jsonObj = {};
+anzSpendingTable.getAnzSpendingTotalInJson(jsonObj, '2019-08-01', '2019-08-30', function (results) {
+    console.log(jsonObj.totalAnzSpending);
+});*/
 
 /*anzSpendingTable = new AnzSpendingTable();
 anzSpendingTable.getAllAnzSpendingFromTable(function (data) {

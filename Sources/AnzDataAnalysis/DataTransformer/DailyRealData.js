@@ -8,14 +8,14 @@ class DailyRealData {
 
 
     getDailyData(beginDate, endDate, callback) {
-        let jsonDailyRealData = { columns: [], dataReal: [], dataEstimate: [], dataAverageReal: [] };
+        let jsonDailyRealData = { columns: [], dataReal: [], dataEstimate: [], dataAverageReal: [] , jQGridRecapColumns : [] , jQGridRecapSource : {}, numberOfDays : 0};
         let dateArray = Helper.getDatesRangeArray(beginDate.getOfficialJavascriptDate(), endDate.getOfficialJavascriptDate());
         let dataTransformerWithDates = new DataTransformer();
         let employeeHours = new EmployeeHours();
         let dailyInputsTable = new DailyInputDataTable();
 
         dataTransformerWithDates.constructDataInMapFormat('false', function (mySpendingWithDates) {
-            mySpendingWithDates.transformToAgGridData(beginDate, endDate, function (anzSpending) {
+            mySpendingWithDates.transformToGridData('true', beginDate, endDate, function (anzSpending) {
                 employeeHours.getHoursForEmployeesInJson(beginDate, endDate, function (employeeHours) {
                     dailyInputsTable.getDailyInputDataInJson(beginDate, endDate, 'true', function (dailyInputs) {
 
@@ -35,6 +35,7 @@ class DailyRealData {
 
 
                         dateArray.forEach(function (work_date) {
+                            jsonDailyRealData.numberOfDays++;
                             jsonDailyRealData.columns.push({
                                 headerName: work_date, field: work_date, filter: 'agTextColumnFilter', editable: false
                             });

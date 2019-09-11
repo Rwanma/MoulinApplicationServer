@@ -119,12 +119,33 @@ class DailyInputDataTable {
     }
 
 
+    getRevenuTotalInJson(jsonObj, beginDate, endDate, revenuType, callback) {
+        logger.log('DAILY_INPUT_TABLE - updateInputTable');
+        let sqlQuery = SqlString.format('SELECT  ROUND(SUM(value),2) AS \'total\'FROM DAILY_INPUT_DATA WHERE work_date >= ? AND work_date <= ? AND input_type = ?',
+            [beginDate, endDate, revenuType]);
+
+        DatabaseConnection.query(sqlQuery, function (results) {
+            if (results === null) {
+                logger.log('DAILY_INPUT_TABLE - DATABASE ERROR updateInputTable');
+            } else {
+                revenuType === 'cash_revenu' ? jsonObj.cashRevenuTotal = results[0].total : jsonObj.ftposRevenuTotal = results[0].total;
+            }
+            callback();
+        });
+    }
+
 
 
 }
 
 
 module.exports = DailyInputDataTable;
+
+/*let dailyInputDataTable = new DailyInputDataTable();
+let jsonObj = {};
+dailyInputDataTable.getRevenuTotalInJson(jsonObj, '2019-08-01', '2019-08-30', 'ftpos_revenu', function (results) {
+    console.log(results.ftposRevenuTotal);
+});*/
 
 
 /*
