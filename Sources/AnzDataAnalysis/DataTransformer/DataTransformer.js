@@ -1,18 +1,15 @@
 let DataSpendingClass = require('./SpendingUnit.js');
 let SpendingsContainer = require('./SpendingContainer.js');
 let FiltersTable = require('../../Database/AnzFilterTable');
-let CategoriesTable = require('../../Database/SpendingCategoriesTable');
 let DailyInputDataTable = require('../../Database/DailyInputDataTable');
 let HoursTable = require('../../Database/HoursTable');
 let AnzSpendingTable = require('../../Database/AnzSpendingTable');
 let Config = require('../../Config/Config');
-let Helper = require('../../Helpers/Helpers.js');
 
 class DataTransformer {
     constructDataInMapFormat(useFilter, callback) {
         let mySpendings = new SpendingsContainer();
         let anzSpendingTable = new AnzSpendingTable();
-        let categoriesTable = new CategoriesTable();
         let filters = new FiltersTable();
 
         filters.getAllFiltersFromDatabase(function (filtersArray) {
