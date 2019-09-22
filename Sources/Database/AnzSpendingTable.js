@@ -74,7 +74,7 @@ class AnzSpendingTable {
 
     getAnzSpendingTotalInJson(jsonObj, beginDate, endDate, callback) {
         logger.log('ANZ_SPENDING_TABLE - getAnzSpendingTotalInJson');
-        let sqlQuery = SqlString.format('SELECT ROUND(SUM(amount),2) AS  \'total\' FROM ANZ_SPENDING  WHERE amount < 0 AND spending_date >= \'2019-06-02\' AND spending_date <= \'2019-06-03\';',
+        let sqlQuery = SqlString.format('SELECT ROUND(SUM(amount),2) AS  \'total\' FROM ANZ_SPENDING  WHERE amount < 0 AND spending_date >= ? AND spending_date <= ?;',
             [beginDate, endDate]);
 
         DatabaseConnection.query(sqlQuery, function (results) {
