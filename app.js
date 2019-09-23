@@ -230,7 +230,7 @@ let server = app.listen(3005, function () {
     app.get("/UpdateEmployeeHourTable", function (req, res) {
         logger.log('UPDATE EMPLOYEE HOUR TABLE REQUEST: ' + req.originalUrl);
         let hoursTable = new HoursTable();
-        hoursTable.updateHours(req.query.employeeID, new Helper.MyDateClass(req.query.dateSelected), req.query.paymentType, parseInt(req.query.hoursChanged, 10), function () {
+        hoursTable.updateHours(req.query.employeeID, new Helper.MyDateClass(req.query.dateSelected), req.query.paymentType, req.query.hoursChanged, function () {
             let employeeHours = new EmployeeHours();
             employeeHours.getHoursForEmployeesInJson(new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), function (employeeHoursJson) {
                 res.status(200).send(employeeHoursJson);
