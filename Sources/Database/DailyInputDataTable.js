@@ -15,9 +15,11 @@ class DailyInputDataTable {
         let inputsQuery = SqlString.format('SELECT DATE_FORMAT(work_date,\'%d/%m/%Y\') as work_date, input_type, value FROM DAILY_INPUT_DATA ' +
             '           WHERE work_date >= ? AND work_date <= ?', [beginDate.getDateInDatabaseFormat(), endDate.getDateInDatabaseFormat()]);
         DatabaseConnection.query(inputsQuery, function (results) {
-            let jsonObj = { columns: [], data: [], dataSalary: [], totalMilkCoffeeSpending: [], totalRevenu: [], totalRent: []/*, errorMessage: null*/ };
+            let jsonObj = { columns: [], jqGridColumns: [], data: [], dataSalary: [], totalMilkCoffeeSpending: [], totalRevenu: [], totalRent: []/*, errorMessage: null*/ };
             let dateArray = Helper.getDatesRangeArray(Helper.transformDayMonthYearToDate(beginDate.dateInDDMMYYYFormat), Helper.transformDayMonthYearToDate(endDate.dateInDDMMYYYFormat));
             jsonObj.columns.push({ headerName: 'Daily Input', field: 'Daily Input', pinned: 'left', filter: 'agTextColumnFilter', editable: false, sortable: false });
+            jsonObj.jqGridColumns.push({ text: 'Daily Input', datafield: 'Daily Input', width: 190, columntype: 'textbox', editable: false});
+
             let cashRevenuArray = {}, ftposRevenuArray = {}, coffeeBagsArray = {}, milkCartonArray = {}, soyMilkArray = {}, almondMilkArray = {}, emptyArray = {},
                 totalRevenu = {}, totalMilkCoffeeSpending = {}, totalDayEstimate = {}, rent = {};
 
@@ -35,9 +37,11 @@ class DailyInputDataTable {
 
             dateArray.forEach(function (work_date) {
                 jsonObj.columns.push({ headerName: work_date, field: work_date, filter: 'agTextColumnFilter', editable: editableTable });
+                jsonObj.jqGridColumns.push({ text: work_date, datafield: work_date, width: 90, columntype: 'textbox', editable: true});
                 totalRevenu[work_date] = 0;
                 totalMilkCoffeeSpending[work_date] = 0;
                 totalDayEstimate[work_date] = 0;
+                cashRevenuArray[work_date] = '';
                 rent[work_date] = priceConfig.rent;
 
                 if (results!==null) {

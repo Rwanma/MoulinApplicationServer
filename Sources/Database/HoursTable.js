@@ -32,9 +32,8 @@ class HoursTable {
     updateHours(employee_id, work_date, payment_type, hours, callback) {
         logger.log('HOURS_TABLE - updateHours');
         let date = work_date.getDateInDatabaseFormat();
-
         let sqlQuery = '';
-        if (hours === 0) {
+        if (hours === 0 || hours === '0') {
             sqlQuery = SqlString.format('DELETE FROM EMPLOYEE_HOURS WHERE  employee_id=? AND  payment_type=? AND work_date = ? ', [employee_id, payment_type, date]);
         }
         else {
