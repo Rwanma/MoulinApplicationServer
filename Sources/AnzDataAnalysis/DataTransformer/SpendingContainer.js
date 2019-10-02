@@ -125,6 +125,13 @@ class SpendingsContainer {
             jsonObj.agGridData.push(averageTotalArray);
             jsonObj.agGridData.push([]);
         }
+
+        columnJqGridTitleArray.sort(function(dateA,dateB){
+            let compareDateA = Helper.transformDayMonthYearToDate(dateA.text);
+            let compareDateB = Helper.transformDayMonthYearToDate(dateB.text);
+            return compareDateA - compareDateB;
+        });
+
         jsonObj.agGridColumns = columnAgGridTitleArray;
         jsonObj.jqGridColumns = columnJqGridTitleArray;
         jsonObj.totalAnzSpending.push(totalArray);
