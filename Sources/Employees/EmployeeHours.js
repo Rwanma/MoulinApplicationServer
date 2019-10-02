@@ -13,6 +13,8 @@ addPaymemtUnitIntoJsonArrayForEmployee = function (employeeJsonArrayWorkedHour, 
     dateArray.forEach(function (date) {
         let transformedDate = date.getDateInDDMMYYYFormat();
         let hoursWorkedInADay = employee.getNumberHoursWorkedFromDate(transformedDate, type);
+        employeeJsonArrayWorkedHour[transformedDate] = '';
+        employeeJsonArrayMoney[transformedDate] = '';
         if (hoursWorkedInADay !== 0) {
             employeeJsonArrayWorkedHour[transformedDate] = hoursWorkedInADay;
             totalHoursWorkedInDayMap.has(transformedDate) ? totalHoursWorkedInDayMap.set(transformedDate, totalHoursWorkedInDayMap.get(transformedDate) + hoursWorkedInADay) : totalHoursWorkedInDayMap.set(transformedDate, hoursWorkedInADay);
@@ -35,43 +37,32 @@ fillTotalJsons = function (totalJson, totalMap, typeofTotal) {
 class EmployeeHours {
 
     getHoursForEmployeesInJson(beginDate, endDate, callback) {
-        let jsonObj = { columns: [], data: [], dataSalary: [], totalPayment: [] };
+        let jsonObj = { columns: [], data: [], dataSalary: [], totalPayment: [] , jqGridColumns: []};
 
-        let columnTitleArray = [];
-        columnTitleArray.push({
-            headerName: 'Employee Id',
-            field: 'Employee Id',
-            pinned: 'left',
-            filter: 'agTextColumnFilter',
-            editable: false
-        });
-        columnTitleArray.push({
-            headerName: 'Employee Name',
-            field: 'Employee Name',
-            pinned: 'left',
-            filter: 'agTextColumnFilter',
-            editable: false
-        });
-        columnTitleArray.push({
-            headerName: 'Payment Type',
-            field: 'Payment Type',
-            pinned: 'left',
-            filter: 'agTextColumnFilter',
-            editable: false
-        });
+        let columnTitleArray = [],jqGridColumnTitleArray = [];
+        columnTitleArray.push({ headerName: 'Employee Id', field: 'Employee Id', pinned: 'left', filter: 'agTextColumnFilter', editable: false });
+        columnTitleArray.push({ headerName: 'Employee Name', field: 'Employee Name', pinned: 'left', filter: 'agTextColumnFilter', editable: false });
+        columnTitleArray.push({ headerName: 'Payment Type', field: 'Payment Type', pinned: 'left', filter: 'agTextColumnFilter', editable: false });
+
+        jqGridColumnTitleArray.push({ text: 'Employee Id', datafield: 'Employee Id', width: 100, columntype: 'textbox', editable: false});
+        jqGridColumnTitleArray.push({ text: 'Employee Name', datafield: 'Employee Name', width: 170, columntype: 'textbox', editable: false});
+        jqGridColumnTitleArray.push({ text: 'Payment Type', datafield: 'Payment Type', width: 100, columntype: 'textbox', editable: false});
 
         let dateArray = Helper.getDatesRangeArray(beginDate.getOfficialJavascriptDate(), endDate.getOfficialJavascriptDate());
         dateArray = dateArray.map(date => new Helper.MyDateClass(date));
 
+        /*        let beginedit = function(row, datafield, columntype) {
+                    if (row === 2){
+                        return false;
+                    }
+                    return true;
+                };*/
+
         dateArray.forEach(function (dateUnit) {
-            columnTitleArray.push({
-                headerName: dateUnit.getDateInDDMMYYYFormat(),
-                field: dateUnit.getDateInDDMMYYYFormat(),
-                filter: 'agNumberColumnFilter',
-                editable: function (params) {
-                    return false;
-                }
-            });
+            columnTitleArray.push({ headerName: dateUnit.getDateInDDMMYYYFormat(), field: dateUnit.getDateInDDMMYYYFormat(), filter: 'agNumberColumnFilter',
+                editable: function (params) { return false; }});
+            jqGridColumnTitleArray.push({ text: dateUnit.getDateInDDMMYYYFormat(), datafield: dateUnit.getDateInDDMMYYYFormat(), width: 90,
+                columntype: 'textbox', editable: true});
         });
 
         let totalHoursMap = new Map(), totalSalaryMap = new Map();
@@ -80,8 +71,6 @@ class EmployeeHours {
         employeeDataContainer.loadEmployeesAndHours(function (employeeData) {
 
             employeeData.forEach(function (employee) {
-                //console.log(employee);
-
                 let employeeArrayHoursTransfer = {}, employeeArrayHoursCash = {}, employeeArrayMoneyTransfer = {},
                     employeeArrayMoneyCash = {};
 
@@ -93,10 +82,15 @@ class EmployeeHours {
                 addPaymemtUnitIntoJsonArrayForEmployee(employeeArrayHoursTransfer, employeeArrayMoneyTransfer, employee, dateArray, 'transfer', totalHoursMap, totalSalaryMap);
                 addPaymemtUnitIntoJsonArrayForEmployee(employeeArrayHoursCash, employeeArrayMoneyCash, employee, dateArray, 'cash', totalHoursMap, totalSalaryMap);
 
-                jsonObj.data.push(employeeArrayHoursTransfer);
-                jsonObj.data.push(employeeArrayHoursCash);
-                jsonObj.dataSalary.push(employeeArrayMoneyTransfer);
-                jsonObj.dataSalary.push(employeeArrayMoneyCash);
+                if (employee.salaryTransfer!==0){
+                    jsonObj.data.push(employeeArrayHoursTransfer);
+                    jsonObj.dataSalary.push(employeeArrayMoneyTransfer);
+                }
+
+                if (employee.salaryCash!==0){
+                    jsonObj.data.push(employeeArrayHoursCash);
+                    jsonObj.dataSalary.push(employeeArrayMoneyCash);
+                }
             });
 
             let totalHoursJson = {}, totalPaymentJson = {};
@@ -109,6 +103,7 @@ class EmployeeHours {
             jsonObj.totalPayment.push(totalPaymentJson);
 
             jsonObj.columns = columnTitleArray;
+            jsonObj.jqGridColumns = jqGridColumnTitleArray;
             callback(jsonObj);
         });
     }

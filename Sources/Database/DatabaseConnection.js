@@ -16,18 +16,18 @@ class DatabaseConnection {
     }
 
     static query(query, callback) {
-        logger.log('******************** New Query ********************');
+        //logger.log('******************** New Query ********************');
         logger.log('DatabaseConnection query : ' + query);
-
         let dbConnection = DatabaseConnection.getConnection();
         dbConnection.query(query, function (error, results) {
             let returnQuery = results;
             if (error) {
-                logger.log('Query FAILED');
-                logger.log(error);
+                logger.log('Query FAILED' + query + ' --- ERROR : ' + error);
                 returnQuery = null;
+            }else{
+                logger.log('Query SUCCESS : ' + query);
             }
-            logger.log('******************** End Query ********************');
+            //logger.log('******************** End Query ********************');
             dbConnection.end();
             callback(returnQuery);
         });
