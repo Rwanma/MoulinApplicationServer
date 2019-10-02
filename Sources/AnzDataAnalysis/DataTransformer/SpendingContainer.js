@@ -65,10 +65,6 @@ class SpendingsContainer {
         averageTotalArray['DateRangeTotal'] = '';
 
         columnAgGridTitleArray.push({ headerName: 'SpendingType', field: 'SpendingType', pinned: 'left', filter: 'agTextColumnFilter' });
-        columnJqGridTitleArray.push({ text: 'Category', datafield: 'Category', width: 150});
-        columnJqGridTitleArray.push({ text: 'Spending Type', datafield: 'SpendingType', width: 150});
-        columnJqGridTitleArray.push({ text: 'Date Range Total', datafield: 'DateRangeTotal', aggregates: ['sum'], width: 120});
-
 
         this.spendingMap.forEach(function (spendingsForOneDay, date) {
             let compareDate = Helper.transformDayMonthYearToDate(date);
@@ -131,6 +127,10 @@ class SpendingsContainer {
             let compareDateB = Helper.transformDayMonthYearToDate(dateB.text);
             return compareDateA - compareDateB;
         });
+
+        columnJqGridTitleArray.splice(0, 0, { text: 'Date Range Total', datafield: 'DateRangeTotal', aggregates: ['sum'], width: 120});
+        columnJqGridTitleArray.splice(0, 0, { text: 'Category', datafield: 'Category', width: 150});
+        columnJqGridTitleArray.splice(0, 0, { text: 'Spending Type', datafield: 'SpendingType', width: 150});
 
         jsonObj.agGridColumns = columnAgGridTitleArray;
         jsonObj.jqGridColumns = columnJqGridTitleArray;
