@@ -15,7 +15,7 @@ class DailyInputDataTable {
         let inputsQuery = SqlString.format('SELECT DATE_FORMAT(work_date,\'%d/%m/%Y\') as work_date, input_type, value FROM DAILY_INPUT_DATA ' +
             '           WHERE work_date >= ? AND work_date <= ?', [beginDate.getDateInDatabaseFormat(), endDate.getDateInDatabaseFormat()]);
         DatabaseConnection.query(inputsQuery, function (results) {
-            let jsonObj = { columns: [], jqGridColumns: [], data: [], dataSalary: [], totalMilkCoffeeSpending: [], totalRevenu: [], totalRent: []/*, errorMessage: null*/ };
+            let jsonObj = { columns: [], jqGridColumns: [], data: [], dataSalary: [], totalMilkCoffeeSpending: [], totalRevenu: [], totalRent: [], dailyRevenuAverage : []/*, errorMessage: null*/ };
             let dateArray = Helper.getDatesRangeArray(Helper.transformDayMonthYearToDate(beginDate.dateInDDMMYYYFormat), Helper.transformDayMonthYearToDate(endDate.dateInDDMMYYYFormat));
             jsonObj.columns.push({ headerName: 'Daily Input', field: 'Daily Input', pinned: 'left', filter: 'agTextColumnFilter', editable: false, sortable: false });
             jsonObj.jqGridColumns.push({ text: 'Daily Input', datafield: 'Daily Input', width: 190, columntype: 'textbox', editable: false});
@@ -135,6 +135,20 @@ class DailyInputDataTable {
                 revenuType === 'cash_revenu' ? jsonObj.cashRevenuTotal = results[0].total : jsonObj.ftposRevenuTotal = results[0].total;
             }
             callback();
+        });
+    }
+
+    getAverageIncomePerDay(beginDate, endDate, callback) {
+        let dbBeginDate = beginDate.getDateInDatabaseFormat(), dbEndDate = endDate.getDateInDatabaseFormat() ;
+        logger.log('DAILY_INPUT_TABLE - getAverageIncomePerDay');
+        let sqlQuery = SqlString.format('select round(avg(sum_per_day),2) from ( select sum(value) as sum_per_day from DAILY_INPUT_DATA where work_date >= ? and work_date <= ? group by work_date) as inner_query',
+            [dbBeginDate, dbEndDate]);
+
+        DatabaseConnection.query(sqlQuery, function (result) {
+            if (result === null) {
+                logger.log('DAILY_INPUT_TABLE - DATABASE ERROR getAverageIncomePerDay');
+            }
+            callback(result);
         });
     }
 

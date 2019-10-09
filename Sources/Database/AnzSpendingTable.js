@@ -87,8 +87,22 @@ class AnzSpendingTable {
         });
     }
 
-}
 
+    getAverageSpendingAnz(beginDate, endDate, callback) {
+    let dbBeginDate = beginDate.getDateInDatabaseFormat(), dbEndDate = endDate.getDateInDatabaseFormat() ;
+        logger.log('ANZ_SPENDING_TABLE - getAverageSpendingAnz');
+        let sqlQuery = SqlString.format(' select round(avg (sum_per_day),2) from (select spending_date, sum(amount) as sum_per_day from ANZ_SPENDING ' +
+            'where amount < 0 and spending_date >= ? and spending_date <= ? group by spending_date ) as inner_query', [dbBeginDate, dbEndDate]);
+
+        DatabaseConnection.query(sqlQuery, function (result) {
+            if (result === null) {
+                logger.log('ANZ_SPENDING_TABLE - DATABASE ERROR getAverageSpendingAnz');
+            }
+            callback(result);
+        });
+    }
+
+}
 module.exports = AnzSpendingTable;
 
 /*let anzSpendingTable = new AnzSpendingTable();

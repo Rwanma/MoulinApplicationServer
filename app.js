@@ -72,6 +72,14 @@ let server = app.listen(3005, function () {
         });
     });
 
+    app.get("/getAverageSpendingPerDay", function (req, res) {
+        logger.log('GET AVERAGE SPENDING REQUEST: ' + req.originalUrl);
+        let anzSpendingTable = new AnzSpendingTable();
+        anzSpendingTable.getAverageSpendingAnz(new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), function (averageDailySpending) {
+                res.status(200).send(averageDailySpending);
+            });
+        });
+
     // ***************************************************************************************************************************************
 
 
@@ -237,6 +245,36 @@ let server = app.listen(3005, function () {
             });
         });
     });
+
+
+    app.get("/getTotalHoursWorked", function (req, res) {
+        logger.log('GET AVERAGE REVENUE REQUEST: ' + req.originalUrl);
+        let hoursTable = new HoursTable();
+        hoursTable.getTotalWorkHours(new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), function (totalWorkHours) {
+            res.status(200).send(totalWorkHours);
+        });
+
+    });
+
+    app.get("/getAverageHoursWorked", function (req, res) {
+        logger.log('GET AVERAGE REVENUE REQUEST: ' + req.originalUrl);
+        let hoursTable = new HoursTable();
+        hoursTable.getAverageHoursWorkedPerDay(new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), function (averageWorkedHoursPerDay) {
+            res.status(200).send(averageWorkedHoursPerDay);
+        });
+
+    });
+
+
+    app.get("/getAverageSalariesPayementPerDay", function (req, res) {
+        logger.log('GET AVERAGE REVENUE REQUEST: ' + req.originalUrl);
+        let hoursTable = new HoursTable();
+        hoursTable.getAverageSalaryPaymentPerDay(new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), function (averageDailySalaries) {
+            res.status(200).send(averageDailySalaries);
+        });
+
+    });
+
     // ***************************************************************************************************************************************
 
 
@@ -262,6 +300,15 @@ let server = app.listen(3005, function () {
                 res.status(200).send(dailyInputJson);
             });
         });
+    });
+
+    app.get("/getAverageRevenuePerDay", function (req, res) {
+        logger.log('GET AVERAGE REVENUE REQUEST: ' + req.originalUrl);
+        let dailyInputsTable = new DailyInputDataTable();
+        dailyInputsTable.getAverageIncomePerDay(new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), function (averageIncomePerDay) {
+            res.status(200).send(averageIncomePerDay);
+        });
+
     });
     // ***************************************************************************************************************************************
 
