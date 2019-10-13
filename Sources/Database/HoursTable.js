@@ -66,72 +66,75 @@ class HoursTable {
     }
 
 
-    getTotalWorkHours(beginDate, endDate, callback) {
-        let dbBeginDate = beginDate.getDateInDatabaseFormat(), dbEndDate = endDate.getDateInDatabaseFormat() ;
+    getTotalWorkHours(jsonObj, beginDate, endDate, callback) {
         logger.log('HOURS_TABLE - getTotalWorkHours');
-        let sqlQuery = SqlString.format('select sum(hours) from EMPLOYEE_HOURS where work_date >= ? and work_date <= ?', [dbBeginDate, dbEndDate]);
+        let sqlQuery = SqlString.format('select sum(hours) as totalWorkedHours from EMPLOYEE_HOURS where work_date >= ? and work_date <= ?', [beginDate, endDate]);
 
         DatabaseConnection.query(sqlQuery, function (result) {
             if (result === null) {
                 logger.log('DAILY_INPUT_TABLE - DATABASE ERROR getAverageIncomePerDay');
             }
-            callback(result);
+            jsonObj.totalWorkedHours = result[0].totalWorkedHours;
+            callback(jsonObj);
         });
     }
 
 
-    getAverageHoursWorkedPerDay(beginDate, endDate, callback) {
+    getAverageHoursWorkedPerDay(jsonObj, beginDate, endDate, callback) {
         let dbBeginDate = beginDate.getDateInDatabaseFormat(), dbEndDate = endDate.getDateInDatabaseFormat() ;
         logger.log('HOURS_TABLE - getAverageHoursWorkedPerDay');
-        let sqlQuery = SqlString.format('select round(avg(sum_per_day),2) from ( select sum(hours) as sum_per_day from EMPLOYEE_HOURS where work_date >= ? and work_date <= ? group by work_date) as inner_query',
+        let sqlQuery = SqlString.format('select sum(sum_per_day) as totalWorkedHours from ( select sum(hours) as sum_per_day from EMPLOYEE_HOURS where work_date >= ? and work_date <= ? group by work_date) as inner_query',
             [dbBeginDate, dbEndDate]);
 
         DatabaseConnection.query(sqlQuery, function (result) {
             if (result === null) {
                 logger.log('DAILY_INPUT_TABLE - DATABASE ERROR getAverageIncomePerDay');
             }
-            callback(result);
+            let averageWorkedHoursPerDay = Math.round(result[0].totalWorkedHours /
+                Helper.getNumberOfDaysBetweenDates(beginDate.getOfficialJavascriptDate(), endDate.getOfficialJavascriptDate())
+                * 100) / 100;
+            jsonObj.averageWorkedHoursPerDay = averageWorkedHoursPerDay;
+            callback(jsonObj);
         });
 
     }
 
-
-    getAverageSalaryPaymentPerDay(beginDate, endDate, callback) {
-        let numberOfDaysBetween = Helper.getNumberOfDaysBetweenDates(beginDate.getOfficialJavascriptDate, endDate.getOfficialJavascriptDate);
-        let dbBeginDate = beginDate.getDateInDatabaseFormat(), dbEndDate = endDate.getDateInDatabaseFormat() ;
+    getAverageSalaryPaymentPerDay(jsonObj, beginDate, endDate, callback) {
         logger.log('HOURS_TABLE - getAverageSalaryPaymentPerDay');
-        let sumCashPerDay = 0, sumCashPerDayTransfer = 0;
-        let sqlSumCash = SqlString.format('select sum(sum_per_day) from (select H.work_date, sum((H.hours*E.salary_cash)) as sum_per_day from EMPLOYEES E, EMPLOYEE_HOURS H where E.employee_id = H.employee_id and H.payment_type=\'cash\' and H.work_date >= ? and H.work_date <= ? > group by H.work_date) as inner_query',
+        let dbBeginDate = beginDate.getDateInDatabaseFormat(), dbEndDate = endDate.getDateInDatabaseFormat() ;
+        let sumCashPerDay = 0, sumTransferPerDay = 0;
+        let sqlSumCash = SqlString.format('select sum(sum_per_day) as sumCashPerDay from (select H.work_date, sum((H.hours*E.salary_cash)) as sum_per_day from EMPLOYEES E, EMPLOYEE_HOURS H where E.employee_id = H.employee_id and H.payment_type=\'cash\' and H.work_date >= ? and H.work_date <= ? group by H.work_date) as inner_query',
             [dbBeginDate, dbEndDate]);
-        let sqlSumTransfer = SqlString.format('select sum(sum_per_day) from (select H.work_date, sum((H.hours*E.salary_transfer)) as sum_per_day from EMPLOYEES E, EMPLOYEE_HOURS H where E.employee_id = H.employee_id and H.payment_type=\'transfer\' and H.work_date >= ? and H.work_date <= ? group by H.work_date) as inner_query',
+        let sqlSumTransfer = SqlString.format('select sum(sum_per_day) as sumTransferPerDay from (select H.work_date, sum((H.hours*E.salary_transfer)) as sum_per_day from EMPLOYEES E, EMPLOYEE_HOURS H where E.employee_id = H.employee_id and H.payment_type=\'transfer\' and H.work_date >= ? and H.work_date <= ? group by H.work_date) as inner_query',
             [dbBeginDate, dbEndDate]);
 
-        let promises = [];
-        promises.push(new Promise((resolve) => {
+        new Promise(function(resolve) {
             DatabaseConnection.query(sqlSumCash, function (result) {
                 if (result === null) {
-                    logger.log('DAILY_INPUT_TABLE - DATABASE ERROR getAverageIncomePerDay');
+                    logger.log('DAILY_INPUT_TABLE - DATABASE ERROR getAverageCashIncomePerDay');
                 } else {
-                    sumCashPerDay = result;
+                    sumCashPerDay = result[0].sumCashPerDay;
                 }
+                resolve(1);
             });
-        }));
-
-        promises.push(new Promise((resolve) => {
-            DatabaseConnection.query(sqlSumTransfer, function (result) {
-                if (result === null) {
-                    logger.log('DAILY_INPUT_TABLE - DATABASE ERROR getAverageIncomePerDay');
-                } else {
-                    sumCashPerDayTransfer = result;
-                }
+        }).then(function() {
+            return new Promise(function(resolve) {
+                DatabaseConnection.query(sqlSumTransfer, function (result) {
+                    if (result === null) {
+                        logger.log('DAILY_INPUT_TABLE - DATABASE ERROR getAverageTransferIncomePerDay');
+                    } else {
+                        sumTransferPerDay = result[0].sumTransferPerDay;
+                    }
+                    resolve(1);
+                });
             });
-        }));
-
-        Promise.all(promises).then(function () {
-            let averageSalariesPerDay = ((sumCashPerDay + sumCashPerDayTransfer) / numberOfDaysBetween);
-            callback(averageSalariesPerDay);
-        });
+        }).then(function(result) {
+            let numberOfDaysBetween = Helper.getNumberOfDaysBetweenDates(beginDate.getOfficialJavascriptDate(), endDate.getOfficialJavascriptDate());
+            jsonObj.averageSalariesPaymentPerDay = Math.round((sumCashPerDay + sumTransferPerDay) / numberOfDaysBetween * 100) / 100;
+            callback(jsonObj);
+        })
     }
+
 }
 
 

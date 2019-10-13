@@ -138,17 +138,23 @@ class DailyInputDataTable {
         });
     }
 
-    getAverageIncomePerDay(beginDate, endDate, callback) {
-        let dbBeginDate = beginDate.getDateInDatabaseFormat(), dbEndDate = endDate.getDateInDatabaseFormat() ;
+    getAverageIncomePerDay(jsonObj, beginDate, endDate, callback) {
         logger.log('DAILY_INPUT_TABLE - getAverageIncomePerDay');
-        let sqlQuery = SqlString.format('select round(avg(sum_per_day),2) from ( select sum(value) as sum_per_day from DAILY_INPUT_DATA where work_date >= ? and work_date <= ? group by work_date) as inner_query',
+        let dbBeginDate = beginDate.getDateInDatabaseFormat(), dbEndDate = endDate.getDateInDatabaseFormat() ;
+        let sqlQuery = SqlString.format('select sum(sum_per_day) as totalSum from ( select sum(value) as sum_per_day from DAILY_INPUT_DATA where work_date >= ? and work_date <= ? group by work_date) as inner_query',
             [dbBeginDate, dbEndDate]);
 
         DatabaseConnection.query(sqlQuery, function (result) {
             if (result === null) {
                 logger.log('DAILY_INPUT_TABLE - DATABASE ERROR getAverageIncomePerDay');
             }
-            callback(result);
+
+            let averageIncomePerDay = Math.round(result[0].totalSum /
+                Helper.getNumberOfDaysBetweenDates(beginDate.getOfficialJavascriptDate(), endDate.getOfficialJavascriptDate())
+                * 100) / 100;
+
+            jsonObj.averageIncomePerDay = averageIncomePerDay;
+            callback(jsonObj);
         });
     }
 

@@ -64,6 +64,16 @@ class DataTransformer {
         promises.push(new Promise((resolve) => {dailyInputs.getRevenuTotalInJson(jsonObj, beginDate, endDate, 'cash_revenu', function () {resolve(jsonObj);});}));
         promises.push(new Promise((resolve) => {dailyInputs.getRevenuTotalInJson(jsonObj, beginDate, endDate, 'ftpos_revenu', function () {resolve(jsonObj);});}));
         promises.push(new Promise((resolve) => {anzSpendingTable.getAnzSpendingTotalInJson(jsonObj, beginDate, endDate, function () {resolve(jsonObj);});}));
+
+        // Promises for averages
+        promises.push(new Promise((resolve) => {hoursTable.getTotalWorkHours(jsonObj, beginDate, endDate, function () {resolve(jsonObj);});}));
+        promises.push(new Promise((resolve) => {hoursTable.getAverageHoursWorkedPerDay(jsonObj, startDate, endingDate, function () {resolve(jsonObj);});}));
+        promises.push(new Promise((resolve) => {anzSpendingTable.getAverageSpendingAnz(jsonObj, startDate, endingDate, function () {resolve(jsonObj);});}));
+        promises.push(new Promise((resolve) => {dailyInputs.getAverageIncomePerDay(jsonObj, startDate, endingDate, function () {resolve(jsonObj);});}));
+        promises.push(new Promise((resolve) => {hoursTable.getAverageSalaryPaymentPerDay(jsonObj, startDate, endingDate, function () {resolve(jsonObj);});}));
+
+
+
         Promise.all(promises).then(function () {
 
             let jQGridRecapColumns  = [];
@@ -100,6 +110,43 @@ class DataTransformer {
             recapSource.push(anzSpendingArray);
             recapSource.push(revenueArray);
 
+            // Setting up Daily Averages
+            let averageDailyColumns=[];
+            averageDailyColumns.push({ headerName: 'AVERAGE TYPE', field: 'average_type', filter: 'agTextColumnFilter', editable: false , width: 300});
+            averageDailyColumns.push({ headerName: 'AVERAGE PER DAY', field: 'average_per_day', filter: 'agTextColumnFilter', editable: false });
+
+            let totalWorkHours = {};
+            totalWorkHours['average_type'] = 'Total work hours';
+            totalWorkHours['average_per_day'] = jsonObj.totalWorkedHours;
+            jsonObj.dataAverageReal.push(totalWorkHours);
+
+            let averageWorkedHoursPerDay = {};
+            averageWorkedHoursPerDay['average_type'] = 'Average hours worked per day';
+            averageWorkedHoursPerDay['average_per_day'] = jsonObj.averageWorkedHoursPerDay;
+            jsonObj.dataAverageReal.push(averageWorkedHoursPerDay);
+
+            let averageSalariesPerDay = {};
+            averageSalariesPerDay['average_type'] = 'Average salary payment per day';
+            averageSalariesPerDay['average_per_day'] = jsonObj.averageSalariesPaymentPerDay;
+            jsonObj.dataAverageReal.push(averageSalariesPerDay);
+
+            let averageIncomePerDay = {};
+            averageIncomePerDay['average_type'] = 'Average Daily Income';
+            averageIncomePerDay['average_per_day'] = jsonObj.averageIncomePerDay;
+            jsonObj.dataAverageReal.push(averageIncomePerDay);
+
+            let averageSpendingPerDay = {};
+            averageSpendingPerDay['average_type'] = 'Average Daily Spending';
+            averageSpendingPerDay['average_per_day'] = jsonObj.averageSpendingPerDay;
+            jsonObj.dataAverageReal.push(averageSpendingPerDay);
+
+            let averageTotalPerDay = {};
+            let totalProfit = jsonObj.averageSpendingPerDay + jsonObj.averageIncomePerDay + jsonObj.averageSalariesPaymentPerDay;
+            averageTotalPerDay['average_type'] = 'Average Daily Profits';
+            averageTotalPerDay['average_per_day'] = totalProfit;
+            jsonObj.dataAverageReal.push(averageTotalPerDay);
+
+            jsonObj.averageDailyColumns = averageDailyColumns;
             jsonObj.jQGridRecapColumns = jQGridRecapColumns;
             jsonObj.jQGridRecapSource = recapSource;
             callback(jsonObj);

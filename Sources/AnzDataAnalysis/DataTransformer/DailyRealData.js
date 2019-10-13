@@ -65,26 +65,6 @@ class DailyRealData {
                         jsonDailyRealData.dataReal.push(employeeTotal);
                         jsonDailyRealData.dataReal.push(dailyRent);
                         jsonDailyRealData.dataReal.push(dailyTotalReal);
-
-/*                        jsonDailyRealData.dataEstimate.push(revenueTotal);
-                        jsonDailyRealData.dataEstimate.push(cafeDailyCosts);
-                        jsonDailyRealData.dataEstimate.push(employeeTotal);
-                        jsonDailyRealData.dataEstimate.push(dailyRent);
-                        jsonDailyRealData.dataEstimate.push(dailyTotalEstimate);*/
-
-
-                        /*                        let avgRevenuePerDay = Helper.calculateAverageArray(revenueTotal);
-                                                let avgRevenueArray = revenueTotal.map(x => avgRevenuePerDay)                        jsonDailyRealData.dataAverageReal.push(avgRevenueArray);
-                        jsonDailyRealData.dataAverageReal.push(avgRevenueArray);*/
-
-                        jsonDailyRealData.dataAverageReal.push(revenueTotal);
-
-
-
-                        jsonDailyRealData.dataAverageReal.push(employeeTotal);
-                        jsonDailyRealData.dataAverageReal.push(dailyRent);
-                        jsonDailyRealData.dataAverageReal.push(dailyAverageEstimate);
-
                         callback(jsonDailyRealData);
                     });
                 });
