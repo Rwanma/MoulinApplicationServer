@@ -141,7 +141,8 @@ class DataTransformer {
             jsonObj.dataAverageReal.push(averageSpendingPerDay);
 
             let averageTotalPerDay = {};
-            let totalProfit = jsonObj.averageSpendingPerDay + jsonObj.averageIncomePerDay + jsonObj.averageSalariesPaymentPerDay;
+            let totalProfit = jsonObj.averageSpendingPerDay + jsonObj.averageIncomePerDay  - jsonObj.averageSalariesPaymentPerDay - Config.getPriceConfig().rent;
+
             averageTotalPerDay['average_type'] = 'Average Daily Profits';
             averageTotalPerDay['average_per_day'] = totalProfit;
             jsonObj.dataAverageReal.push(averageTotalPerDay);
