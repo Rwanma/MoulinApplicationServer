@@ -107,6 +107,10 @@ class EmployeeHours {
             callback(jsonObj);
         });
     }
+
+
+
+
 }
 
 /*let employeeDataContainer = new Employees.EmployeeData();

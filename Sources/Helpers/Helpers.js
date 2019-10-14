@@ -2,6 +2,23 @@
 
 
 module.exports = {
+
+
+    getArrayOfAverages : function(array) {
+        let sum = 0, count = array.length;
+        for (let i = 0; i < count; i++) {
+            sum = sum + array[i];
+        }
+        let average =  sum / count;
+
+
+    },
+
+    getNumberOfDaysBetweenDates(startDate, endDate) {
+        return (Math.round((endDate-startDate)/(1000*60*60*24)) + 1);
+    },
+
+
     getDatesRangeArray: function (startDate, endDate) {
         let dateArray = [];
         for (let myDate = startDate; myDate <= endDate; myDate = new Date(myDate.getTime() + 1000 * 60 * 60 * 24)) {
