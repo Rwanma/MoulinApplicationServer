@@ -9,7 +9,8 @@ class DailyRealData {
 
 
     getDailyData(beginDate, endDate, callback) {
-        let jsonDailyRealData = { columns: [], dataReal: [], dataEstimate: [], dataAverageReal: [] , jQGridRecapColumns : [] , jQGridRecapSource : {}, numberOfDays : 0};
+        let jsonDailyRealData = { columns: [], dataReal: [], dataEstimate: [], dataAverageReal: [] , jQGridRecapColumns : [] , jQGridRecapSource : {}, numberOfDays : 0,
+            chartData : []};
         let dateArray = Helper.getDatesRangeArray(beginDate.getOfficialJavascriptDate(), endDate.getOfficialJavascriptDate());
         let dataTransformerWithDates = new DataTransformer();
         let employeeHours = new EmployeeHours();
@@ -37,9 +38,9 @@ class DailyRealData {
 
                         dateArray.forEach(function (work_date) {
                             jsonDailyRealData.numberOfDays++;
-                            jsonDailyRealData.columns.push({
-                                headerName: work_date, field: work_date, filter: 'agTextColumnFilter', editable: false
-                            });
+                            jsonDailyRealData.columns.push({ headerName: work_date, field: work_date, filter: 'agTextColumnFilter', editable: false });
+
+
 
                             revenueTotal[work_date] = dailyInputs.totalRevenu[0][work_date];
                             employeeTotal[work_date] = employeeHours.totalPayment[0][work_date];
@@ -58,6 +59,11 @@ class DailyRealData {
                             dailyTotalReal[work_date] = dayRevenueTotal - dayEmployeeTotal + dayAnzTotal - dayDailyRent;
                             dailyTotalEstimate[work_date] = dayRevenueTotal - dayEmployeeTotal - dayCafeDailyCosts - dayDailyRent;
                             dailyAverageEstimate[work_date] = dayRevenueTotal - dayEmployeeTotal + dayAverageTotal - dayDailyRent;
+
+
+
+                            jsonDailyRealData.chartData.push({'Day': work_date.substring(0,5),
+                                AnzSpending: dayAnzTotal, Salaries: dayEmployeeTotal, Revenues: dayRevenueTotal, Profits: dailyTotalReal[work_date]});
                         });
 
                         jsonDailyRealData.dataReal.push(revenueTotal);
@@ -71,6 +77,8 @@ class DailyRealData {
             });
         });
     }
+
+
 }
 
 

@@ -76,9 +76,9 @@ let server = app.listen(3005, function () {
         logger.log('GET AVERAGE SPENDING REQUEST: ' + req.originalUrl);
         let anzSpendingTable = new AnzSpendingTable();
         anzSpendingTable.getAverageSpendingAnz(new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), function (averageDailySpending) {
-                res.status(200).send(averageDailySpending);
-            });
+            res.status(200).send(averageDailySpending);
         });
+    });
 
     // ***************************************************************************************************************************************
 
@@ -326,5 +326,22 @@ let server = app.listen(3005, function () {
     });
     // ***************************************************************************************************************************************
 
+
+    // ***************************************************************************************************************************************
+    //DAILY INPUT DATA
+
+    //DailyInputDataTable
+    app.get("/GetChartData", function (req, res) {
+        logger.log('GET CHART DATA REQUEST: ' + req.originalUrl);
+
+        let dailyRealData = new DailyRealData();
+        let dataTransformerWithDates = new DataTransormer();
+        dailyRealData.getDailyData(new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), function (JsonData) {
+            dataTransformerWithDates.getTotalData(JsonData, new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), function (JsonDataWithTotals) {
+                res.status(200).send(JsonDataWithTotals);
+            });
+        });
+    });
+    // ***************************************************************************************************************************************
 
 });
