@@ -7,6 +7,7 @@ let EmployeeTable = require('./Sources/Database/EmployeeTable');
 let HoursTable = require('./Sources/Database/HoursTable');
 let IncomingForm = require('formidable').IncomingForm;
 let AnzSpendingTable = require('./Sources/Database/AnzSpendingTable');
+let PersonalSpendingTable = require('./Sources/Database/PersonalSpendingTable');
 let AnzFilterTable = require('./Sources/Database/AnzFilterTable');
 let CategoriesTable = require('./Sources/Database/CategoriesTable');
 let DailyInputDataTable = require('./Sources/Database/DailyInputDataTable');
@@ -343,5 +344,74 @@ let server = app.listen(3005, function () {
         });
     });
     // ***************************************************************************************************************************************
+
+
+
+
+    // ***************************************************************************************************************************************
+    //ANZ PERSONAL SPENDING
+    app.post('/uploadPersonalSpendingCsv', function (req, res) {
+        logger.log('UPLOAD PERSONAL SPENDING CSV DATA REQUEST: ' + req.originalUrl);
+        let form = new IncomingForm();
+        form.uploadDir = Config.getCsvDirectory();
+        form.parse(req, function (err, fields, files) {
+            if (err) {
+                logger.log('ERROR in uploadFilters: ' + err);
+            } else {
+                let personalSpendingTable = new PersonalSpendingTable();
+                personalSpendingTable.insertPersonalSpendingInDatabaseFromCsvFormat(files.filepond.path, function (JsonData) {
+                    res.status(200).send(JsonData);
+                });
+            }
+        });
+    });
+
+
+    app.get("/GetAllPersonalSpendingConfig", function (req, res) {
+        logger.log('GET PERSONAL SPENDING CONFIGURATION REQUEST: ' + req.originalUrl);
+        let personalSpendingTable = new PersonalSpendingTable();
+        personalSpendingTable.getAllPersonalSpendingFromDatabase(function (JsonData) {
+            res.status(200).send(JsonData);
+        });
+
+    });
+
+
+
+    app.get("/AddPersonalSpending", function (req, res) {
+        logger.log('ADD PERSONAL SPENDING REQUEST: ' + req.originalUrl);
+        let personalSpendingTable = new PersonalSpendingTable();
+        personalSpendingTable.addPersonalSpending(req.query.personal_spending, req.query.spender_name,function (JsonData) {
+            res.status(200).send(JsonData);
+        });
+    });
+
+
+    app.get("/DeletePersonalSpending", function (req, res) {
+        logger.log('DELETE PERSONAL SPENDING REQUEST: ' + req.originalUrl);
+        let personalSpendingTable = new PersonalSpendingTable();
+        personalSpendingTable.deletePersonalSpending(req.query.personal_spending, function (JsonData) {
+            res.status(200).send(JsonData);
+        });
+    });
+
+
+    app.get("/getPersonalSpending", function (req, res) {
+        logger.log('GET PERSONAL SPENDING REQUEST: ' + req.originalUrl);
+        let dataTransformerWithDates = new DataTransormer();
+        let personalSpendingTable = new PersonalSpendingTable();
+        dataTransformerWithDates.constructDataInMapFormat(false, function (mySpendingWithDates) {
+            mySpendingWithDates.getPersonalSpendingGridData(new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), req.query.spenderName, function (JsonData) {
+                personalSpendingTable.calculatePersonalSpendingTotal(JsonData, new Helper.MyDateClass(req.query.beginDate).getDateInDatabaseFormat(),
+                    new Helper.MyDateClass(req.query.endDate).getDateInDatabaseFormat(), function (JsonData) {
+                        res.status(200).send(JsonData);
+                    });
+            });
+        });
+    });
+    // ***************************************************************************************************************************************
+
+
+
 
 });
