@@ -88,6 +88,14 @@ class AnzSpendingTable {
     }
 
 
+    getAllAnzSpendingFromTableForDates(beginDate, endDate, callback) {
+        logger.log('ANZ_SPENDING_TABLE - getAllAnzSpendingFromTable');
+        DatabaseConnection.query(SqlString.format('select DATE_FORMAT(spending_date,\'%d/%m/%Y\') AS spending_date, amount, spending_description from ANZ_SPENDING WHERE spending_date >= ? AND spending_date <= ?' ,
+            [beginDate, endDate]), function (results) {
+            callback(results);
+        });
+    }
+
     getAverageSpendingAnz(jsonObj, beginDate, endDate, callback) {
         logger.log('ANZ_SPENDING_TABLE - getAverageSpendingAnz');
         let dbBeginDate = beginDate.getDateInDatabaseFormat(), dbEndDate = endDate.getDateInDatabaseFormat() ;

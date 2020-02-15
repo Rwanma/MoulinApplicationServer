@@ -6,7 +6,7 @@ class Logger {
     }
 
     log(textToLog){
-        this.logger.info(textToLog);
+        console.log(textToLog);
     }
 }
 

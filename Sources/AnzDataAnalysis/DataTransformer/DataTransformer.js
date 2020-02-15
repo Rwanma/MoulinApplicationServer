@@ -4,6 +4,7 @@ let FiltersTable = require('../../Database/AnzFilterTable');
 let DailyInputDataTable = require('../../Database/DailyInputDataTable');
 let HoursTable = require('../../Database/HoursTable');
 let AnzSpendingTable = require('../../Database/AnzSpendingTable');
+let PersonalSpendingTable = require('../../Database/PersonalSpendingTable');
 let Config = require('../../Config/Config');
 
 class DataTransformer {
@@ -58,7 +59,12 @@ class DataTransformer {
         let anzSpendingTable = new AnzSpendingTable();
         let dailyInputs = new DailyInputDataTable();
         let hoursTable = new HoursTable();
+        let personalSpendingTable = new PersonalSpendingTable();
         let promises = [];
+
+
+        // Promises for total
+        promises.push(new Promise((resolve) => {personalSpendingTable.calculatePersonalSpendingTotal(jsonObj, beginDate, endDate, function () {resolve(jsonObj);});}));
         promises.push(new Promise((resolve) => {hoursTable.getEmployeeTotalInJson(jsonObj, beginDate, endDate, 'cash', function () {resolve(jsonObj);});}));
         promises.push(new Promise((resolve) => {hoursTable.getEmployeeTotalInJson(jsonObj, beginDate, endDate, 'transfer', function () {resolve(jsonObj);});}));
         promises.push(new Promise((resolve) => {dailyInputs.getRevenuTotalInJson(jsonObj, beginDate, endDate, 'cash_revenu', function () {resolve(jsonObj);});}));
@@ -73,14 +79,13 @@ class DataTransformer {
         promises.push(new Promise((resolve) => {hoursTable.getAverageSalaryPaymentPerDay(jsonObj, startDate, endingDate, function () {resolve(jsonObj);});}));
 
 
-
         Promise.all(promises).then(function () {
 
             let jQGridRecapColumns  = [];
-            jQGridRecapColumns.push({ text: 'Category', datafield: 'Category', width: 300});
-            jQGridRecapColumns.push({ text: 'Cash', datafield: 'Cash', width: 400, aggregates: ['sum']});
-            jQGridRecapColumns.push({ text: 'Transfer', datafield: 'Transfer', width: 400, aggregates: ['sum']});
-            jQGridRecapColumns.push({ text: 'Total', datafield: 'Total', width: 400, aggregates: ['sum']});
+            jQGridRecapColumns.push({ text: 'Category', datafield: 'Category', width: 120});
+            jQGridRecapColumns.push({ text: 'Cash', datafield: 'Cash', width: 120, aggregates: ['sum']});
+            jQGridRecapColumns.push({ text: 'Transfer', datafield: 'Transfer', width: 120, aggregates: ['sum']});
+            jQGridRecapColumns.push({ text: 'Total', datafield: 'Total', width: 120, aggregates: ['sum']});
 
             let rentArray = {};
             rentArray['Category'] = 'RENT';
