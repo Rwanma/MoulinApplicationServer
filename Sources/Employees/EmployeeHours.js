@@ -36,7 +36,7 @@ fillTotalJsons = function (totalJson, totalMap, typeofTotal) {
 
 class EmployeeHours {
 
-    getHoursForEmployeesInJson(beginDate, endDate, callback) {
+    getHoursForEmployeesInJson(beginDate, endDate, onlyActiveEmployees, callback) {
         let jsonObj = { columns: [], data: [], dataSalary: [], totalPayment: [] , jqGridColumns: []};
 
         let columnTitleArray = [],jqGridColumnTitleArray = [];
@@ -51,13 +51,6 @@ class EmployeeHours {
         let dateArray = Helper.getDatesRangeArray(beginDate.getOfficialJavascriptDate(), endDate.getOfficialJavascriptDate());
         dateArray = dateArray.map(date => new Helper.MyDateClass(date));
 
-        /*        let beginedit = function(row, datafield, columntype) {
-                    if (row === 2){
-                        return false;
-                    }
-                    return true;
-                };*/
-
         dateArray.forEach(function (dateUnit) {
             columnTitleArray.push({ headerName: dateUnit.getDateInDDMMYYYFormat(), field: dateUnit.getDateInDDMMYYYFormat(), filter: 'agNumberColumnFilter',
                 editable: function (params) { return false; }});
@@ -68,9 +61,9 @@ class EmployeeHours {
         let totalHoursMap = new Map(), totalSalaryMap = new Map();
 
         let employeeDataContainer = new Employees.EmployeeData();
-        employeeDataContainer.loadEmployeesAndHours(function (employeeData) {
+        employeeDataContainer.loadEmployeesAndHours(onlyActiveEmployees, function (employeeData) {
 
-            employeeData.forEach(function (employee) {
+            employeeData.employeeData.forEach(function (employee) {
                 let employeeArrayHoursTransfer = {}, employeeArrayHoursCash = {}, employeeArrayMoneyTransfer = {},
                     employeeArrayMoneyCash = {};
 
@@ -92,6 +85,7 @@ class EmployeeHours {
                     jsonObj.dataSalary.push(employeeArrayMoneyCash);
                 }
             });
+
 
             let totalHoursJson = {}, totalPaymentJson = {};
             fillTotalJsons(totalHoursJson, totalHoursMap, 'Total Hours');
@@ -115,7 +109,7 @@ class EmployeeHours {
 
 /*let employeeDataContainer = new Employees.EmployeeData();
 employeeDataContainer.loadEmployeesAndHours(function (employeeData) {
-    console.log(employeeData);
+    console.log(employeeData.employeeData);
 });*/
 
 

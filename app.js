@@ -189,7 +189,7 @@ let server = app.listen(3005, function () {
     app.get("/Employees", function (req, res) {
         logger.log('GET EMPLOYEES REQUEST: ' + req.originalUrl);
         let employeeTable = new EmployeeTable();
-        employeeTable.getAllDatabaseEmployees(function (EmployeeDataJson) {
+        employeeTable.getActiveEmployees(function (EmployeeDataJson) {
             res.status(200).send(EmployeeDataJson);
         });
 
@@ -217,7 +217,7 @@ let server = app.listen(3005, function () {
     app.get("/deleteEmployee", function (req, res) {
         logger.log('DELETE EMPLOYEE REQUEST: ' + req.originalUrl);
         let employeeDatabase = new EmployeeTable();
-        employeeDatabase.deleteEmployee(req.query.id, function (EmployeeDataJson) {
+        employeeDatabase.setEmployeeToInactive(req.query.id, function (EmployeeDataJson) {
             res.status(200).send(EmployeeDataJson);
         });
     });
@@ -229,7 +229,7 @@ let server = app.listen(3005, function () {
     app.get("/GetEmployeeHoursTable", function (req, res) {
         logger.log('GET EMPLOYEE HOUR TABLE REQUEST: ' + req.originalUrl);
         let employeeHours = new EmployeeHours();
-        employeeHours.getHoursForEmployeesInJson(new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), function (employeeHoursJson) {
+        employeeHours.getHoursForEmployeesInJson(new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), true, function (employeeHoursJson) {
             res.status(200).send(employeeHoursJson);
         });
     });
@@ -241,7 +241,7 @@ let server = app.listen(3005, function () {
         let hoursTable = new HoursTable();
         hoursTable.updateHours(req.query.employeeID, new Helper.MyDateClass(req.query.dateSelected), req.query.paymentType, req.query.hoursChanged, function () {
             let employeeHours = new EmployeeHours();
-            employeeHours.getHoursForEmployeesInJson(new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate), function (employeeHoursJson) {
+            employeeHours.getHoursForEmployeesInJson(new Helper.MyDateClass(req.query.beginDate), new Helper.MyDateClass(req.query.endDate),true, function (employeeHoursJson) {
                 res.status(200).send(employeeHoursJson);
             });
         });
