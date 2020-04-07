@@ -3,14 +3,15 @@
     "name": "test_database2",
     "host": "localhost",
     "user": "root",
-    "password": "xxxxxxx"
+    "password": "xxxxxxxx"
   },
   "prices": {
     "coffee": 27,
     "normalMilk": 2.34,
     "soyMilk": 3.66,
     "almondMilk": 3.3,
-    "rent" : 237
+    "rent" : 237,
+    "storageRent" : 100
   },
   "logs": {
     "directory": "./logs"
