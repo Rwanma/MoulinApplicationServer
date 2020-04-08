@@ -13,12 +13,13 @@ class DateHourUnit {
 }
 
 class Employee {
-    constructor(id, firstName, lastName, salaryTransfer, salaryCash) {
+    constructor(id, firstName, lastName, salaryTransfer, salaryCash, active) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.salaryTransfer = salaryTransfer;
         this.salaryCash = salaryCash;
+        this.active = active;
         this.dateHourUnitForEmployee = [];
     }
 
@@ -45,14 +46,14 @@ class EmployeeData {
     }
 
 
-    loadEmployeesAndHours(callback) {
+    loadEmployeesAndHours(onlyActiveEmployees, callback) {
         let employeeDatabase = new EmployeeTable();
         let hoursTable = new HoursTable();
         let promises = [];
         let employeeThis = this;
         employeeDatabase.getAllDatabaseEmployees(function (databaseEmployees) {
             databaseEmployees.map((employees) => {
-                let employee = new Employee(employees.employee_id, employees.first_name, employees.last_name, employees.salary_transfer, employees.salary_cash);
+                let employee = new Employee(employees.employee_id, employees.first_name, employees.last_name, employees.salary_transfer, employees.salary_cash, employees.active);
                 promises.push(new Promise((resolve) => {
                     hoursTable.getDatabaseHoursForEmployee(employee.id, function (hours) {
                         hours.map((hours) => {
@@ -60,24 +61,34 @@ class EmployeeData {
                             dateWorked.setDateFromOfficialDateClass(hours.work_date);
                             employee.dateHourUnitForEmployee.push(new DateHourUnit(hours.employee_id, hours.payment_type, dateWorked, hours.hours))
                         });
-                        employeeThis.employeeData.push(employee);
+
+                        if (onlyActiveEmployees) {
+                            if (employee.active == 'TRUE') {
+                                employeeThis.employeeData.push(employee);
+                            }
+                        } else {
+                            employeeThis.employeeData.push(employee);
+                        }
+
                         resolve(employee);
                     });
                 }));
             });
             Promise.all(promises).then(function () {
                 employeeThis.employeeData.sort((employeeA, employeeB) => (employeeA.id - employeeB.id));
-                callback(employeeThis.employeeData);
+                callback(employeeThis);
             })
         })
     }
 }
 
 
+
 /*let employeeData = new EmployeeData();
-employeeData.loadEmployeesAndHours(function (employeeData) {
+employeeData.loadEmployeesAndHours(false, function (employeeData) {
     console.log(employeeData);
 });*/
+
 
 
 module.exports = {

@@ -21,7 +21,7 @@ class DailyInputDataTable {
             jsonObj.jqGridColumns.push({ text: 'Daily Input', datafield: 'Daily Input', width: 190, columntype: 'textbox', editable: false});
 
             let cashRevenuArray = {}, ftposRevenuArray = {}, coffeeBagsArray = {}, milkCartonArray = {}, soyMilkArray = {}, almondMilkArray = {}, emptyArray = {},
-                totalRevenu = {}, totalMilkCoffeeSpending = {}, totalDayEstimate = {}, rent = {};
+                totalRevenu = {}, totalMilkCoffeeSpending = {}, totalDayEstimate = {}, rent = {}, storageRent = {};
 
             cashRevenuArray['Daily Input'] = 'Cash Revenu';
             ftposRevenuArray['Daily Input'] = 'FTPOS Revenu';
@@ -33,6 +33,7 @@ class DailyInputDataTable {
             totalMilkCoffeeSpending['Daily Input'] = 'Total Milk/Coffee Spending';
             totalDayEstimate['Daily Input'] = 'Total Day Estimate';
             rent['Daily Input'] = 'Rent';
+            storageRent['Daily Input'] = 'Storage Rent';
             let priceConfig = Config.getPriceConfig();
 
             dateArray.forEach(function (work_date) {
@@ -43,6 +44,7 @@ class DailyInputDataTable {
                 totalDayEstimate[work_date] = 0;
                 cashRevenuArray[work_date] = '';
                 rent[work_date] = priceConfig.rent;
+                storageRent[work_date] = priceConfig.storageRent;
 
                 if (results!==null) {
                     results.forEach(function (result) {
@@ -98,6 +100,8 @@ class DailyInputDataTable {
             jsonObj.totalRevenu.push(totalRevenu);
             jsonObj.totalMilkCoffeeSpending.push(totalMilkCoffeeSpending);
             jsonObj.totalRent.push(rent);
+            jsonObj.totalRent.push(storageRent);
+
 
             callback(jsonObj);
         });

@@ -18,7 +18,7 @@ class DailyRealData {
 
         dataTransformerWithDates.constructDataInMapFormat('false', function (mySpendingWithDates) {
             mySpendingWithDates.transformToGridData('true', beginDate, endDate, function (anzSpending) {
-                employeeHours.getHoursForEmployeesInJson(beginDate, endDate, function (employeeHours) {
+                employeeHours.getHoursForEmployeesInJson(beginDate, endDate, false, function (employeeHours) {
                     dailyInputsTable.getDailyInputDataInJson(beginDate, endDate, 'true', function (dailyInputs) {
 
                         jsonDailyRealData.columns[0] = { headerName: 'Category', field: 'Category', pinned: 'left', filter: 'agTextColumnFilter', editable: false };

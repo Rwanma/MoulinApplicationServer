@@ -92,6 +92,11 @@ class DataTransformer {
             rentArray['Transfer'] = - Config.getPriceConfig().rent * jsonObj.numberOfDays;
             rentArray['Total'] = - Config.getPriceConfig().rent * jsonObj.numberOfDays;
 
+            let storageRentArray = {};
+            storageRentArray['Category'] = 'STORAGE RENT';
+            storageRentArray['Transfer'] = - Config.getPriceConfig().storageRent * jsonObj.numberOfDays;
+            storageRentArray['Total'] = - Config.getPriceConfig().storageRent * jsonObj.numberOfDays;
+
             let employeeSalaryArray = {};
             employeeSalaryArray['Category'] = 'SALARIES';
             employeeSalaryArray['Cash'] = -jsonObj.employeeCashTotal;
@@ -112,6 +117,7 @@ class DataTransformer {
             let recapSource = [];
             recapSource.push(employeeSalaryArray);
             recapSource.push(rentArray);
+            recapSource.push(storageRentArray);
             recapSource.push(anzSpendingArray);
             recapSource.push(revenueArray);
 
@@ -146,7 +152,7 @@ class DataTransformer {
             jsonObj.dataAverageReal.push(averageSpendingPerDay);
 
             let averageTotalPerDay = {};
-            let totalProfit = jsonObj.averageSpendingPerDay + jsonObj.averageIncomePerDay  - jsonObj.averageSalariesPaymentPerDay - Config.getPriceConfig().rent;
+            let totalProfit = jsonObj.averageSpendingPerDay + jsonObj.averageIncomePerDay  - jsonObj.averageSalariesPaymentPerDay - Config.getPriceConfig().rent - Config.getPriceConfig().storageRent;
 
             averageTotalPerDay['average_type'] = 'Average Daily Profits';
             averageTotalPerDay['average_per_day'] = totalProfit;
